@@ -1,0 +1,9 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+.idea/*
+*.iml
+*.ipr
+*.iws
+target/*
+.DS_Store
+vs.bin
+App_Data/*
