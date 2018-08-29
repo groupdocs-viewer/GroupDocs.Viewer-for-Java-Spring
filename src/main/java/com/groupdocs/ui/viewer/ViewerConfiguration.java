@@ -1,12 +1,13 @@
 package com.groupdocs.ui.viewer;
 
+import com.groupdocs.ui.config.CommonConfiguration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "viewer")
-public class ViewerConfiguration {
+public class ViewerConfiguration extends CommonConfiguration {
 
     @Value("${filesDirectory}")
     private String filesDirectory;
@@ -20,9 +21,6 @@ public class ViewerConfiguration {
     @Value("#{new Boolean('${zoom}')}")
     private Boolean zoom;
 
-    @Value("#{new Boolean('${pageSelector}')}")
-    private Boolean pageSelector;
-
     @Value("#{new Boolean('${search}')}")
     private Boolean search;
 
@@ -32,26 +30,11 @@ public class ViewerConfiguration {
     @Value("#{new Boolean('${rotate}')}")
     private Boolean rotate;
 
-    @Value("#{new Boolean('${download}')}")
-    private Boolean download;
-
-    @Value("#{new Boolean('${upload}')}")
-    private Boolean upload;
-
-    @Value("#{new Boolean('${print}')}")
-    private Boolean print;
-
     @Value("${defaultDocument}")
     private String defaultDocument;
 
-    @Value("#{new Boolean('${browse}')}")
-    private Boolean browse;
-
     @Value("#{new Boolean('${htmlMode}')}")
     private Boolean htmlMode;
-
-    @Value("#{new Boolean('${rewrite}')}")
-    private Boolean rewrite;
 
     public String getFilesDirectory() {
         return filesDirectory;
@@ -85,14 +68,6 @@ public class ViewerConfiguration {
         this.zoom = zoom;
     }
 
-    public Boolean isPageSelector() {
-        return pageSelector;
-    }
-
-    public void setPageSelector(Boolean pageSelector) {
-        this.pageSelector = pageSelector;
-    }
-
     public Boolean isSearch() {
         return search;
     }
@@ -117,44 +92,12 @@ public class ViewerConfiguration {
         this.rotate = rotate;
     }
 
-    public Boolean isDownload() {
-        return download;
-    }
-
-    public void setDownload(Boolean download) {
-        this.download = download;
-    }
-
-    public Boolean isUpload() {
-        return upload;
-    }
-
-    public void setUpload(Boolean upload) {
-        this.upload = upload;
-    }
-
-    public Boolean isPrint() {
-        return print;
-    }
-
-    public void setPrint(Boolean print) {
-        this.print = print;
-    }
-
     public String getDefaultDocument() {
         return defaultDocument;
     }
 
     public void setDefaultDocument(String defaultDocument) {
         this.defaultDocument = defaultDocument;
-    }
-
-    public Boolean isBrowse() {
-        return browse;
-    }
-
-    public void setBrowse(Boolean browse) {
-        this.browse = browse;
     }
 
     public Boolean isHtmlMode() {
@@ -165,32 +108,19 @@ public class ViewerConfiguration {
         this.htmlMode = htmlMode;
     }
 
-    public Boolean isRewrite() {
-        return rewrite;
-    }
-
-    public void setRewrite(Boolean rewrite) {
-        this.rewrite = rewrite;
-    }
-
     @Override
     public String toString() {
-        return "ViewerConfiguration{" +
+        return super.toString() +
+                "ViewerConfiguration{" +
                 "filesDirectory='" + filesDirectory + '\'' +
                 ", fontsDirectory='" + fontsDirectory + '\'' +
                 ", preloadPageCount=" + preloadPageCount +
                 ", zoom=" + zoom +
-                ", pageSelector=" + pageSelector +
                 ", search=" + search +
                 ", thumbnails=" + thumbnails +
                 ", rotate=" + rotate +
-                ", download=" + download +
-                ", upload=" + upload +
-                ", print=" + print +
                 ", defaultDocument='" + defaultDocument + '\'' +
-                ", browse=" + browse +
                 ", htmlMode=" + htmlMode +
-                ", rewrite=" + rewrite +
                 '}';
     }
 }
