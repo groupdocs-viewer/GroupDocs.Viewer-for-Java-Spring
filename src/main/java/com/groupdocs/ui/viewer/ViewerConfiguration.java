@@ -2,38 +2,36 @@ package com.groupdocs.ui.viewer;
 
 import com.groupdocs.ui.config.CommonConfiguration;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "viewer")
 public class ViewerConfiguration extends CommonConfiguration {
 
-    @Value("${filesDirectory}")
+    @Value("${viewer.filesDirectory}")
     private String filesDirectory;
 
-    @Value("${fontsDirectory}")
+    @Value("${viewer.fontsDirectory}")
     private String fontsDirectory;
 
-    @Value("#{new Integer('${preloadPageCount}')}")
+    @Value("#{new Integer('${viewer.preloadPageCount}')}")
     private Integer preloadPageCount;
 
-    @Value("#{new Boolean('${zoom}')}")
+    @Value("#{new Boolean('${viewer.zoom}')}")
     private Boolean zoom;
 
-    @Value("#{new Boolean('${search}')}")
+    @Value("#{new Boolean('${viewer.search}')}")
     private Boolean search;
 
-    @Value("#{new Boolean('${thumbnails}')}")
+    @Value("#{new Boolean('${viewer.thumbnails}')}")
     private Boolean thumbnails;
 
-    @Value("#{new Boolean('${rotate}')}")
+    @Value("#{new Boolean('${viewer.rotate}')}")
     private Boolean rotate;
 
-    @Value("${defaultDocument}")
+    @Value("${viewer.defaultDocument}")
     private String defaultDocument;
 
-    @Value("#{new Boolean('${htmlMode}')}")
+    @Value("#{new Boolean('${viewer.htmlMode}')}")
     private Boolean htmlMode;
 
     public String getFilesDirectory() {

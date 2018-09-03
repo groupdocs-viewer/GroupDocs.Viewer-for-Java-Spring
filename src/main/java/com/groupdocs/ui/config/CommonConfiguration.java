@@ -2,7 +2,6 @@ package com.groupdocs.ui.config;
 
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,25 +10,24 @@ import org.springframework.stereotype.Component;
  * @author Aspose Pty Ltd
  */
 @Component
-@ConfigurationProperties(prefix = "common")
 public class CommonConfiguration {
 
-    @Value("#{new Boolean('${pageSelector}')}")
+    @Value("#{new Boolean('${common.pageSelector}')}")
     private boolean pageSelector;
 
-    @Value("#{new Boolean('${download}')}")
+    @Value("#{new Boolean('${common.download}')}")
     private Boolean download;
 
-    @Value("#{new Boolean('${upload}')}")
+    @Value("#{new Boolean('${common.upload}')}")
     private Boolean upload;
 
-    @Value("#{new Boolean('${print}')}")
+    @Value("#{new Boolean('${common.print}')}")
     private Boolean print;
 
-    @Value("#{new Boolean('${browse}')}")
+    @Value("#{new Boolean('${common.browse}')}")
     private Boolean browse;
 
-    @Value("#{new Boolean('${rewrite}')}")
+    @Value("#{new Boolean('${common.rewrite}')}")
     private Boolean rewrite;
 
     public boolean isPageSelector() {

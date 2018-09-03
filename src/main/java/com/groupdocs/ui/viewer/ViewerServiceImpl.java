@@ -59,11 +59,6 @@ public class ViewerServiceImpl implements ViewerService {
             throw new IllegalStateException("Files directory must be specified!");
         }
 
-        // Check if filesDirectory is relative or absolute path
-        File filesDirectory = new File(viewerConfiguration.getFilesDirectory());
-        if (!filesDirectory.exists()) {
-            viewerConfiguration.setFilesDirectory(new File("").getAbsolutePath() + filesDirectory.getPath());
-        }
         // set GroupDocs license
         License license = new License();
         license.setLicense(globalConfiguration.getApplication().getLicensePath());
