@@ -5,6 +5,10 @@ package com.groupdocs.ui.exception;
  */
 public class TotalGroupDocsException extends RuntimeException {
 
+    public TotalGroupDocsException(String message) {
+        super(message);
+    }
+
     public TotalGroupDocsException(String message, Throwable cause) {
         super(message, cause);
     }

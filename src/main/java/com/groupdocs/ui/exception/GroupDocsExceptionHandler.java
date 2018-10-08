@@ -11,8 +11,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GroupDocsExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(TotalGroupDocsException.class)
-    protected ResponseEntity<ExceptionEntity> handleTotalGroupDocsException(TotalGroupDocsException ex) {
-        ExceptionEntity exceptionEntity = new ExceptionEntity(ex.getMessage());
+    protected ResponseEntity<ExceptionEntity> handleTotalGroupDocsException(TotalGroupDocsException exception) {
+        ExceptionEntity exceptionEntity = new ExceptionEntity();
+        exceptionEntity.setMessage(exception.getMessage());
+        if (logger.isDebugEnabled()) {
+            exception.printStackTrace();
+            exceptionEntity.setException(exception);
+        }
+        logger.error(exception.getCause() != null? exception.getCause().getLocalizedMessage() : exception.getMessage());
         return new ResponseEntity<>(exceptionEntity, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

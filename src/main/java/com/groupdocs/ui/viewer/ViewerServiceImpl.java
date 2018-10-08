@@ -59,21 +59,29 @@ public class ViewerServiceImpl implements ViewerService {
             throw new IllegalStateException("Files directory must be specified!");
         }
 
-        // set GroupDocs license
-        License license = new License();
-        license.setLicense(globalConfiguration.getApplication().getLicensePath());
+        try {
+            // set GroupDocs license
+            License license = new License();
+            license.setLicense(globalConfiguration.getApplication().getLicensePath());
+        } catch (Throwable throwable) {
+            logger.error("Can not verify Viewer license!");
+        }
 
-        // create viewer application configuration
-        ViewerConfig config = new ViewerConfig();
-        config.setStoragePath(viewerConfiguration.getFilesDirectory());
-        config.setUseCache(false);
-        config.getFontDirectories().add(viewerConfiguration.getFontsDirectory());
+        try {
+            // create viewer application configuration
+            ViewerConfig config = new ViewerConfig();
+            config.setStoragePath(viewerConfiguration.getFilesDirectory());
+            config.setUseCache(false);
+            config.getFontDirectories().add(viewerConfiguration.getFontsDirectory());
 
-        // initialize total instance for the HTML mode
-        viewerHtmlHandler = new ViewerHtmlHandler(config);
+            // initialize total instance for the HTML mode
+            viewerHtmlHandler = new ViewerHtmlHandler(config);
 
-        // initialize total instance for the Image mode
-        viewerImageHandler = new ViewerImageHandler(config);
+            // initialize total instance for the Image mode
+            viewerImageHandler = new ViewerImageHandler(config);
+        } catch (Throwable throwable) {
+            logger.error("Viewer wasn't initiate properly!");
+        }
     }
 
     /**
