@@ -223,16 +223,11 @@
   transform: rotate(180deg);
 }
 .gd-pregress {
-	font-size: 120px;
-	border-radius: 50%;
-	float: left;
-	margin: 0 0.1em 0.1em 0;
-	background-color: #cccccc;
-	left: calc(100% - 135px);
-	top: Calc(100% - 62%);
-    position: absolute;
-    width: 18px;
-    height: 18px;
+  font-size: 120px;
+  border-radius: 50%;
+  background-color: #cccccc;
+  right: 45;
+  top: 30px;
 }
 .gd-pregress *,
 .gd-pregress *:before,

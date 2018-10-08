@@ -1367,13 +1367,13 @@ function addFileForUpload(uploadFiles, url) {
 									'<div class="gd-file-name">' + url.split('/').pop() + '</div>'+
 									'<span id="gd-upload-size"> type: ' + url.split('/').pop().split('.').pop() +'</span>'+
 								'</div>'+
-								'<div id="gd-pregress-bar-' + tableRowsNumber + '" class="gd-pregress p0 small green">'+
+								'<div id="gd-pregress-bar-' + tableRowsNumber + '" class="gd-pregress p0 small green gd-upload-status">'+
 									'<div class="slice">'+
 										'<div class="bar"></div>'+
 										'<div class="fill"></div>'+
 									'</div>'+
 								'</div>'+
-								'<div id="gd-upload-complete-' + tableRowsNumber + '" class="gd-upload-complete"><i class="fa fa-check-circle-o"></i></div>'+
+								'<div id="gd-upload-complete-' + tableRowsNumber + '" class="gd-upload-complete gd-upload-status"><i class="fa fa-check-circle-o"></i></div>'+
 							'</div>'+
 							'<div class="swiper-slide gd-desktop swiper-slide-cancel">'+
 								'<div class="files-table-remove">'+
@@ -1407,13 +1407,13 @@ function addFileForUpload(uploadFiles, url) {
 										'<span id="gd-upload-size">size: ' + new_size +'</span>'+
 										'<span id="gd-upload-size"> type: ' + file.name.split('.').pop() +'</span>'+
 									'</div>'+
-									'<div id="gd-pregress-bar-' + tableRowsNumber + '" class="gd-pregress p0 small green">'+
+									'<div id="gd-pregress-bar-' + tableRowsNumber + '" class="gd-pregress p0 small green gd-upload-status">'+
 										'<div class="slice">'+
 											'<div class="bar"></div>'+
 											'<div class="fill"></div>'+
 										'</div>'+
 									'</div>'+
-									'<div id="gd-upload-complete-' + tableRowsNumber + '" class="gd-upload-complete"><i class="fa fa-check-circle-o"></i></div>'+
+									'<div id="gd-upload-complete-' + tableRowsNumber + '" class="gd-upload-complete gd-upload-status"><i class="fa fa-check-circle-o"></i></div>'+
 								'</div>'+
 								'<div class="swiper-slide gd-desktop swiper-slide-cancel">'+
 									'<div class="files-table-remove">'+
@@ -1636,7 +1636,7 @@ function getHtmlFileBrowser(){
 						    '<td class="gd-filetree-up gd-go-up">...</td>'+
 						    '<td></td>'+
 						    '<td></td>'+
-						'</tr>'
+						'</tr>' +
 						// list of files
 					'</tbody>'+
 				'</table>'+
@@ -1667,8 +1667,8 @@ function getHtmlUpload(){
 							'</div>'+
 							'<div class="inner-addon left-addon btn gd-url-wrap" id="gd-url-wrap" style="display: none;">'+
 								'<input type="url" class="form-control" id="gd-url" placeholder="Enter your file URL">'+
-								'<button class="btn" id="gd-url-cancel"><i class="fa fa-trash-o"></i></button>'+
-								'<button class="btn btn-primary" id="gd-add-url">Add</button>'+
+								'<button class="btn" id="gd-add-url"><i class="fa fa-plus"></i></button>'+
+								'<button class="btn" id="gd-url-cancel"><i class="fa fa-times"></i></button>'+
 							'</div>'+
 							'<div id="gd-upload-files-table">'+
 								// list of files

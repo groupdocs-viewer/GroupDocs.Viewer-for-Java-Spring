@@ -379,10 +379,10 @@ MODAL
 }
 .gd-modal-dialog {
     position: absolute;
-    width: 600px;
-    height: 400px;
-    top: calc(50% - 200px);
-    left: calc(50% - 300px);
+    width: 700px;
+    height: 500px;
+    top: calc(50% - 250px);
+    left: calc(50% - 350px);
 }
 .gd-modal-content {
     background-color: #ffffff;
@@ -406,13 +406,12 @@ MODAL
 .gd-modal-body {
     background-color: #ffffff;
     padding: 20px;
-    max-height: 500px;
     overflow: hidden;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 52px);
     overflow-y: auto;
-    margin-right: 14px;
-    padding-right: 28px;
+    /* margin-right: 14px; */
+    /* padding-right: 28px; */
 }
 .gd-modal-table {
     width: 100%;
@@ -448,10 +447,9 @@ MODAL
     font-size: 12px;
 }
 #gd-modal-spinner {
-    position: absolute;
     background-color: #ffffff;
-    width: 560px;
-    height: 50px;
+    width: 100%;
+    height: 20px;
     text-align: center;
     font-size: 16px;
     display: none;
@@ -465,8 +463,7 @@ MODAL
     padding: 20px;
 }
 #gd-upload-section {
-    margin-top: 75px;
-    width: 550px;
+    text-align: center;
 }
 #gd-upload-section label {
     background-color: #3e4e5a;
@@ -485,7 +482,7 @@ MODAL
     width: 267px;
     background-color: #3e4e5a;
     border: none;
-    height: 33px;
+    height: 40px;
     color: #ffffff;
 }  
 #gd-open-document {
@@ -512,8 +509,9 @@ MODAL
 #gd-upload-files-table .gd-filetree-name {
     position: absolute;
     top: 20px;
-    left: 43px;
-    width: calc(100% - 260px);
+    left: 40px;
+    width: calc(100% - 130px);
+    text-align: left;
 }
 #gd-upload-files-table .gd-filetree-name > span {
     font-size: 12px;
@@ -521,15 +519,16 @@ MODAL
     color: #9a9a9a;
     margin-right: 15px;
 }
+.gd-upload-status{
+    position: absolute;
+    width:  18px;
+    height:  18px;
+}
 .gd-upload-complete {
-    font-size: 10px;
-    text-transform: uppercase;
-    text-align: center;
     color: #addca5;
-	position: fixed;
-    left: calc(100% - 139px);
-    top: Calc(100% - 72px);
-	display: none;
+    display: none;
+    right: 55px;
+    top: 3px;
 }
 .gd-cancel-button {
     padding: 7px;
@@ -550,8 +549,6 @@ MODAL
     font-weight: bold;
 }
 section {
-    display: block;
-    padding: 20px 0 0;
 }
 #gd-upload-section label i {
     margin-right: 10px;
@@ -572,37 +569,35 @@ section {
     border: 1px solid transparent;
 }
 .gd-desktop{
-    margin-left: -43px;
-    padding-top: 20px;
+    position: absolute;
+    text-align: right;
+    left: 20px;
+    top: 18px;
 }
 .gd-url-wrap {
+    margin-top: 5px;
     position: relative;
 }
 .gd-url-wrap > input {
-    padding-left: 12px;
-    margin-left: 35px;
-    width: 454px;
+    padding: 0 30px 0 12px;
+    width: 625px;
     height: 32px;
     color: #585858;
 }
 #gd-url-cancel {
     background: transparent;
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-#gd-url-cancel i {
-    font-size: 21px;
-    margin-top: 5px;
-    margin-left: 6px;
+    font-size: 20px;
+    padding: 0 15px;
+    color: #e44646;
+    margin-top: -4px;
 }
 #gd-add-url{
+    background: transparent;
+    font-size: 20px;
+    color: #3e4e59;
     position: absolute;
-    top: 0;
-    color: #fff;
-    background-color: #3e4d59;
-    padding: 7px 16px 6px;
-    font-size: 12px;
+    right: 40px;
+    top: 5px;
 }
 .gd-password-wrap {
     position: relative;
@@ -635,24 +630,19 @@ section {
     background-color: #f8f8f8;
     text-align: center;
     cursor: default;
-    margin-bottom: 20px;
-    margin-top: -81px;
-    position: inherit;
-    width: 550px;
-    height: 228px;
-    padding-bottom: 7px;
+    height: 253px;
 }
 .gd-drag-n-drop-wrap h2 {
     color: #cacaca;
     margin: 5px 0;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 300;
 }
 .gd-drag-n-drop-wrap h4 {
     color: #cacaca;
     font-weight: 300;
-    font-size: 14px;
-    margin: 10px 0;
+    font-size: 12px;
+    margin: 10px 0 15px;
 }
 .gd-drag-n-drop-wrap h5 {
     color: #afafaf;
@@ -661,11 +651,11 @@ section {
     margin: 20px 0 0 0;
 }
 .gd-drag-n-drop-icon {
-    margin: 12px auto;
+    margin: 30px auto 0;
 }
 .gd-drag-n-drop-icon .fa-cloud-download {
-    color: #efefef;
-    font-size: 80px;
+    color: #f1f1f1;
+    font-size: 110px;
 }
 .gd-drag-n-drop-buttons i {
     margin-right: 5px;
@@ -685,7 +675,7 @@ section {
     border-color: #aaa;
 }
 .gd-go-up{
-	cursor: pointer;
+    cursor: pointer;
 }
 /*
 ******************************************
@@ -743,5 +733,4 @@ Swipe elements
     height: 76px !important;
 }
 .swiper-slide{
-	left: 6px;
 }
