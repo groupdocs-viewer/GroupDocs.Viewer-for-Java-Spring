@@ -523,6 +523,8 @@ MODAL
     position: absolute;
     width:  18px;
     height:  18px;
+    right: 42px;
+    top: 29px;
 }
 .gd-upload-complete {
     color: #addca5;
@@ -571,7 +573,7 @@ section {
 .gd-desktop{
     position: absolute;
     text-align: right;
-    left: 20px;
+    left: -2px;
     top: 18px;
 }
 .gd-url-wrap {

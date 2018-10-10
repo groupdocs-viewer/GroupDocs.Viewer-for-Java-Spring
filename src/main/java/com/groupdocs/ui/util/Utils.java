@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
 import java.util.List;
@@ -109,15 +110,17 @@ public class Utils {
         if (rewrite) {
             // save file with rewrite if exists
             Files.copy(uploadedInputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            return filePath;
         } else {
             if (file.exists()) {
                 // get file with new name
                 file = getFreeFileName(documentStoragePath, fileName);
             }
-            // save file with out rewriting
-            Files.copy(uploadedInputStream, file.toPath());
+            // save file without rewriting
+            Path path = file.toPath();
+            Files.copy(uploadedInputStream, path);
+            return path.toString();
         }
-        return filePath;
     }
 
     /**
