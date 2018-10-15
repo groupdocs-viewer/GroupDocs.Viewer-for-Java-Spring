@@ -7,3 +7,9 @@ target/*
 .DS_Store
 vs.bin
 App_Data/*
+node_modules
+src/main/resources/static/assets/*
+!src/main/resources/static/assets/.gitkeep
+node/
+etc/
+package-lock.json
