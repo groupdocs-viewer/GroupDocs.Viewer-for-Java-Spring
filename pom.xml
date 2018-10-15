@@ -89,8 +89,6 @@
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
-                        <!-- optional: default phase is "generate-resources" -->
-                        <phase>compile</phase>
                         <configuration>
                             <nodeVersion>v4.6.0</nodeVersion>
                         </configuration>
@@ -100,8 +98,6 @@
                         <goals>
                             <goal>npm</goal>
                         </goals>
-                        <phase>compile</phase>
-
                         <configuration>
                             <arguments>install</arguments>
                         </configuration>
@@ -111,9 +107,6 @@
                         <goals>
                             <goal>gulp</goal>
                         </goals>
-
-                        <phase>compile</phase>
-
                         <configuration>
                             <arguments>build</arguments>
                         </configuration>
