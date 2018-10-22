@@ -1,4 +1,4 @@
-![Alt text](https://raw.githubusercontent.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/master/src/main/resources/static/assets/viewer/images/banner.png "GroupDocs.Viewer")
+![Alt text](https://raw.githubusercontent.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/gh-pages/images/banner.png "GroupDocs.Viewer")
 # GroupDocs.Viewer-for-Java-Spring Example
 ###### version 1.5.0
 
