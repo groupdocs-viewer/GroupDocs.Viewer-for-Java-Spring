@@ -34,6 +34,9 @@ public class ViewerConfiguration extends CommonConfiguration {
     @Value("#{new Boolean('${viewer.htmlMode}')}")
     private Boolean htmlMode;
 
+    @Value("#{new Boolean('${viewer.cache}')}")
+    private boolean cache;
+
     public String getFilesDirectory() {
         return filesDirectory;
     }
@@ -106,6 +109,14 @@ public class ViewerConfiguration extends CommonConfiguration {
         this.htmlMode = htmlMode;
     }
 
+    public boolean isCache() {
+        return cache;
+    }
+
+    public void setCache(boolean cache) {
+        this.cache = cache;
+    }
+
     @Override
     public String toString() {
         return super.toString() +
@@ -119,6 +130,7 @@ public class ViewerConfiguration extends CommonConfiguration {
                 ", rotate=" + rotate +
                 ", defaultDocument='" + defaultDocument + '\'' +
                 ", htmlMode=" + htmlMode +
+                ", cache=" + cache +
                 '}';
     }
 }

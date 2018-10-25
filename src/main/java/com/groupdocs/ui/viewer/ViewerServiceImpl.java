@@ -71,7 +71,7 @@ public class ViewerServiceImpl implements ViewerService {
             // create viewer application configuration
             ViewerConfig config = new ViewerConfig();
             config.setStoragePath(viewerConfiguration.getFilesDirectory());
-            config.setUseCache(false);
+            config.setUseCache(viewerConfiguration.isCache());
             config.getFontDirectories().add(viewerConfiguration.getFontsDirectory());
 
             // initialize total instance for the HTML mode
