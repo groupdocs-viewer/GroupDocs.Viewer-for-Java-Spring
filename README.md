@@ -1,6 +1,6 @@
 ![Alt text](https://raw.githubusercontent.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/gh-pages/images/banner.png "GroupDocs.Viewer")
 # GroupDocs.Viewer-for-Java-Spring Example
-###### version 1.6.0
+###### version 1.7.0
 
 
 ## System Requirements

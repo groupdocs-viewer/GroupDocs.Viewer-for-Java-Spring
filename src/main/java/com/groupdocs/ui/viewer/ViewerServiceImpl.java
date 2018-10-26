@@ -14,11 +14,14 @@ import com.groupdocs.viewer.converter.options.ImageOptions;
 import com.groupdocs.viewer.domain.FileDescription;
 import com.groupdocs.viewer.domain.containers.DocumentInfoContainer;
 import com.groupdocs.viewer.domain.containers.FileListContainer;
+import com.groupdocs.viewer.domain.html.PageHtml;
+import com.groupdocs.viewer.domain.image.PageImage;
 import com.groupdocs.viewer.domain.options.DocumentInfoOptions;
 import com.groupdocs.viewer.domain.options.FileListOptions;
 import com.groupdocs.viewer.domain.options.RotatePageOptions;
 import com.groupdocs.viewer.exception.GroupDocsViewerException;
 import com.groupdocs.viewer.exception.InvalidPasswordException;
+import com.groupdocs.viewer.handler.ViewerHandler;
 import com.groupdocs.viewer.handler.ViewerHtmlHandler;
 import com.groupdocs.viewer.handler.ViewerImageHandler;
 import com.groupdocs.viewer.licensing.License;
@@ -45,8 +48,7 @@ public class ViewerServiceImpl implements ViewerService {
     @Autowired
     private ViewerConfiguration viewerConfiguration;
 
-    private ViewerHtmlHandler viewerHtmlHandler;
-    private ViewerImageHandler viewerImageHandler;
+    private ViewerHandler viewerHandler;
 
     /**
      * Initializing fields after creating configuration objects
@@ -74,11 +76,13 @@ public class ViewerServiceImpl implements ViewerService {
             config.setUseCache(viewerConfiguration.isCache());
             config.getFontDirectories().add(viewerConfiguration.getFontsDirectory());
 
-            // initialize total instance for the HTML mode
-            viewerHtmlHandler = new ViewerHtmlHandler(config);
-
-            // initialize total instance for the Image mode
-            viewerImageHandler = new ViewerImageHandler(config);
+            if (viewerConfiguration.isHtmlMode()) {
+                // initialize total instance for the HTML mode
+                viewerHandler = new ViewerHtmlHandler(config);
+            } else {
+                // initialize total instance for the Image mode
+                viewerHandler = new ViewerImageHandler(config);
+            }
         } catch (Throwable throwable) {
             logger.error("Viewer wasn't initiate properly!");
         }
@@ -92,9 +96,9 @@ public class ViewerServiceImpl implements ViewerService {
         // get file list from storage path
         FileListOptions fileListOptions = new FileListOptions(path);
         // get temp directory name
-        String tempDirectoryName =  new com.groupdocs.viewer.config.ViewerConfig().getCacheFolderName();
+        String tempDirectoryName = new com.groupdocs.viewer.config.ViewerConfig().getCacheFolderName();
         try {
-            FileListContainer fileListContainer = viewerImageHandler.getFileList(fileListOptions);
+            FileListContainer fileListContainer = viewerHandler.getFileList(fileListOptions);
 
             ArrayList<FileDescriptionEntity> fileList = new ArrayList<>();
             // parse files/folders list
@@ -119,7 +123,7 @@ public class ViewerServiceImpl implements ViewerService {
                 fileList.add(fileDescription);
             }
             return fileList;
-        } catch (Exception ex){
+        } catch (Exception ex) {
             logger.error("Exception in getting file list", ex);
             throw new TotalGroupDocsException(ex.getMessage(), ex);
         }
@@ -149,24 +153,20 @@ public class ViewerServiceImpl implements ViewerService {
             }
             // get document info container
             DocumentInfoContainer documentInfoContainer;
-            if (loadDocumentRequest.getHtmlMode()) {
-                documentInfoContainer = viewerHtmlHandler.getDocumentInfo(documentGuid, documentInfoOptions);
-            } else {
-                documentInfoContainer = viewerImageHandler.getDocumentInfo(documentGuid, documentInfoOptions);
-            }
+            documentInfoContainer = viewerHandler.getDocumentInfo(documentGuid, documentInfoOptions);
             // return document description
             return documentInfoContainer;
-        } catch (GroupDocsViewerException ex){
+        } catch (GroupDocsViewerException ex) {
             // Set exception message
             String message = ex.getMessage();
             if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && StringUtils.isEmpty(password)) {
                 message = "Password Required";
-            } else if(GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && !StringUtils.isEmpty(password)) {
+            } else if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && !StringUtils.isEmpty(password)) {
                 message = "Incorrect password";
             }
             logger.error(message, ex);
             throw new TotalGroupDocsException(message, ex);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             logger.error("Exception in loading document", ex);
             throw new TotalGroupDocsException(ex.getMessage(), ex);
         }
@@ -185,7 +185,7 @@ public class ViewerServiceImpl implements ViewerService {
             LoadedPageEntity loadedPage = new LoadedPageEntity();
             String angle;
             // set options
-            if (loadDocumentPageRequest.getHtmlMode()) {
+            if (viewerConfiguration.isHtmlMode()) {
                 HtmlOptions htmlOptions = new HtmlOptions();
                 htmlOptions.setPageNumber(pageNumber);
                 htmlOptions.setCountPagesToRender(1);
@@ -195,9 +195,10 @@ public class ViewerServiceImpl implements ViewerService {
                     htmlOptions.setPassword(password);
                 }
                 // get page HTML
-                loadedPage.setPageHtml(viewerHtmlHandler.getPages(documentGuid, htmlOptions).get(0).getHtmlContent());
+                PageHtml page = (PageHtml) viewerHandler.getPages(documentGuid, htmlOptions).get(0);
+                loadedPage.setPageHtml(page.getHtmlContent());
                 // get page rotation angle
-                angle = String.valueOf(viewerHtmlHandler.getDocumentInfo(documentGuid).getPages().get(pageNumber - 1).getAngle());
+                angle = String.valueOf(viewerHandler.getDocumentInfo(documentGuid).getPages().get(pageNumber - 1).getAngle());
             } else {
                 ImageOptions imageOptions = new ImageOptions();
                 imageOptions.setPageNumber(pageNumber);
@@ -207,17 +208,18 @@ public class ViewerServiceImpl implements ViewerService {
                     imageOptions.setPassword(password);
                 }
                 // get page image
-                byte[] bytes = IOUtils.toByteArray(viewerImageHandler.getPages(documentGuid, imageOptions).get(0).getStream());
+                PageImage page = (PageImage) viewerHandler.getPages(documentGuid, imageOptions).get(0);
+                byte[] bytes = IOUtils.toByteArray(page.getStream());
                 // encode ByteArray into String
                 String encodedImage = new String(Base64.getEncoder().encode(bytes));
                 loadedPage.setPageImage(encodedImage);
                 // get page rotation angle
-                angle = String.valueOf(viewerImageHandler.getDocumentInfo(documentGuid).getPages().get(pageNumber - 1).getAngle());
+                angle = String.valueOf(viewerHandler.getDocumentInfo(documentGuid).getPages().get(pageNumber - 1).getAngle());
             }
             loadedPage.setAngle(angle);
             // return loaded page object
             return loadedPage;
-        } catch (Exception ex){
+        } catch (Exception ex) {
             logger.error("Exception in loading document page", ex);
             throw new TotalGroupDocsException(ex.getMessage(), ex);
         }
@@ -249,13 +251,8 @@ public class ViewerServiceImpl implements ViewerService {
                     rotateOptions.setPassword(password);
                 }
                 // rotate page
-                if(rotateDocumentPagesRequest.getHtmlMode()) {
-                    viewerHtmlHandler.rotatePage(documentGuid, rotateOptions);
-                    resultAngle = String.valueOf(viewerHtmlHandler.getDocumentInfo(documentGuid).getPages().get(pageNumber - 1).getAngle());
-                } else {
-                    viewerImageHandler.rotatePage(documentGuid, rotateOptions);
-                    resultAngle = String.valueOf(viewerImageHandler.getDocumentInfo(documentGuid).getPages().get(pageNumber - 1).getAngle());
-                }
+                viewerHandler.rotatePage(documentGuid, rotateOptions);
+                resultAngle = String.valueOf(viewerHandler.getDocumentInfo(documentGuid).getPages().get(pageNumber - 1).getAngle());
                 // add rotated page number
                 rotatedPage.setPageNumber(pageNumber);
                 // add rotated page angle
@@ -264,7 +261,7 @@ public class ViewerServiceImpl implements ViewerService {
                 rotatedPages.add(rotatedPage);
             }
             return rotatedPages;
-        }catch (Exception ex){
+        } catch (Exception ex) {
             logger.error("Exception in rotating document page", ex);
             throw new TotalGroupDocsException(ex.getMessage(), ex);
         }
