@@ -1,6 +1,7 @@
 package com.groupdocs.ui.viewer;
 
 import com.groupdocs.ui.config.GlobalConfiguration;
+import com.groupdocs.ui.exception.PasswordExceptions;
 import com.groupdocs.ui.exception.TotalGroupDocsException;
 import com.groupdocs.ui.model.request.LoadDocumentPageRequest;
 import com.groupdocs.ui.model.request.LoadDocumentRequest;
@@ -100,7 +101,7 @@ public class ViewerServiceImpl implements ViewerService {
         try {
             FileListContainer fileListContainer = viewerHandler.getFileList(fileListOptions);
 
-            ArrayList<FileDescriptionEntity> fileList = new ArrayList<>();
+            List<FileDescriptionEntity> fileList = new ArrayList<>();
             // parse files/folders list
             for (FileDescription fd : fileListContainer.getFiles()) {
                 FileDescriptionEntity fileDescription = new FileDescriptionEntity();
@@ -152,19 +153,19 @@ public class ViewerServiceImpl implements ViewerService {
                 documentInfoOptions.setPassword(password);
             }
             // get document info container
-            DocumentInfoContainer documentInfoContainer;
-            documentInfoContainer = viewerHandler.getDocumentInfo(documentGuid, documentInfoOptions);
+            DocumentInfoContainer documentInfoContainer = viewerHandler.getDocumentInfo(documentGuid, documentInfoOptions);
             // return document description
             return documentInfoContainer;
         } catch (GroupDocsViewerException ex) {
             // Set exception message
             String message = ex.getMessage();
             if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && StringUtils.isEmpty(password)) {
-                message = "Password Required";
+                message = PasswordExceptions.PASSWORD_REQUIRED;
             } else if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && !StringUtils.isEmpty(password)) {
-                message = "Incorrect password";
+                message = PasswordExceptions.INCORRECT_PASSWORD;
+            } else {
+                logger.error(message, ex);
             }
-            logger.error(message, ex);
             throw new TotalGroupDocsException(message, ex);
         } catch (Exception ex) {
             logger.error("Exception in loading document", ex);
@@ -183,6 +184,12 @@ public class ViewerServiceImpl implements ViewerService {
         String password = loadDocumentPageRequest.getPassword();
         try {
             LoadedPageEntity loadedPage = new LoadedPageEntity();
+            // get document info options
+            DocumentInfoOptions documentInfoOptions = new DocumentInfoOptions(documentGuid);
+            // set password for protected document
+            if (!StringUtils.isEmpty(password)) {
+                documentInfoOptions.setPassword(password);
+            }
             String angle;
             // set options
             if (viewerConfiguration.isHtmlMode()) {
@@ -198,7 +205,7 @@ public class ViewerServiceImpl implements ViewerService {
                 PageHtml page = (PageHtml) viewerHandler.getPages(documentGuid, htmlOptions).get(0);
                 loadedPage.setPageHtml(page.getHtmlContent());
                 // get page rotation angle
-                angle = String.valueOf(viewerHandler.getDocumentInfo(documentGuid).getPages().get(pageNumber - 1).getAngle());
+                angle = String.valueOf(viewerHandler.getDocumentInfo(documentGuid, documentInfoOptions).getPages().get(pageNumber - 1).getAngle());
             } else {
                 ImageOptions imageOptions = new ImageOptions();
                 imageOptions.setPageNumber(pageNumber);
@@ -214,7 +221,7 @@ public class ViewerServiceImpl implements ViewerService {
                 String encodedImage = new String(Base64.getEncoder().encode(bytes));
                 loadedPage.setPageImage(encodedImage);
                 // get page rotation angle
-                angle = String.valueOf(viewerHandler.getDocumentInfo(documentGuid).getPages().get(pageNumber - 1).getAngle());
+                angle = String.valueOf(viewerHandler.getDocumentInfo(documentGuid, documentInfoOptions).getPages().get(pageNumber - 1).getAngle());
             }
             loadedPage.setAngle(angle);
             // return loaded page object
@@ -236,8 +243,14 @@ public class ViewerServiceImpl implements ViewerService {
         String password = rotateDocumentPagesRequest.getPassword();
         Integer angle = rotateDocumentPagesRequest.getAngle();
         try {
+            // get document info options
+            DocumentInfoOptions documentInfoOptions = new DocumentInfoOptions(documentGuid);
+            // set password for protected document
+            if (!StringUtils.isEmpty(password)) {
+                documentInfoOptions.setPassword(password);
+            }
             // a list of the rotated pages info
-            ArrayList<RotatedPageEntity> rotatedPages = new ArrayList<>();
+            List<RotatedPageEntity> rotatedPages = new ArrayList<>();
             // rotate pages
             for (int i = 0; i < pages.size(); i++) {
                 int pageNumber = pages.get(i);
@@ -252,7 +265,8 @@ public class ViewerServiceImpl implements ViewerService {
                 }
                 // rotate page
                 viewerHandler.rotatePage(documentGuid, rotateOptions);
-                resultAngle = String.valueOf(viewerHandler.getDocumentInfo(documentGuid).getPages().get(pageNumber - 1).getAngle());
+                resultAngle = String.valueOf(viewerHandler.getDocumentInfo(documentGuid, documentInfoOptions).getPages().get(pageNumber - 1).getAngle());
+
                 // add rotated page number
                 rotatedPage.setPageNumber(pageNumber);
                 // add rotated page angle
