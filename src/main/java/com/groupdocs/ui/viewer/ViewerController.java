@@ -17,6 +17,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -127,8 +128,8 @@ public class ViewerController {
     @RequestMapping(method = RequestMethod.POST, value = "/uploadDocument",
             consumes = MULTIPART_FORM_DATA_VALUE, produces = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public UploadedDocumentEntity uploadDocument(@RequestParam("file") MultipartFile content,
-                                                 @RequestParam("url") String url,
+    public UploadedDocumentEntity uploadDocument(@Nullable @RequestParam("file") MultipartFile content,
+                                                 @RequestParam(value = "url", required = false) String url,
                                                  @RequestParam("rewrite") Boolean rewrite) {
         // get documents storage path
         String documentStoragePath = viewerService.getViewerConfiguration().getFilesDirectory();
