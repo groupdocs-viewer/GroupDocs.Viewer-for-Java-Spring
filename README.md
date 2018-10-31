@@ -2,8 +2,8 @@
 # GroupDocs.Viewer-for-Java-Spring Example
 ###### version 1.8.0
 
-[![Build Status](https://travis-ci.org/egorovpavel/GroupDocs.Viewer-for-Java-Spring.svg?branch=master)](https://travis-ci.org/egorovpavel/GroupDocs.Viewer-for-Java-Spring)
-![](https://sonarcloud.io/api/project_badges/measure?project=egorovpavel_GroupDocs.Viewer-for-Java-Spring&metric=alert_status)
+[![Build Status](https://travis-ci.org/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring.svg?branch=master)](https://travis-ci.org/egorovpavel/GroupDocs.Viewer-for-Java-Spring)
+[![Maintainability](https://api.codeclimate.com/v1/badges/e8ee774e4c4b2fad413a/maintainability)](https://codeclimate.com/github/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/maintainability)
 
 ## System Requirements
 - Java 8 (JDK 1.8)
