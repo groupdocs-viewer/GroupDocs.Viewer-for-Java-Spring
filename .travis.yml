@@ -7,12 +7,15 @@ jdk:
 - oraclejdk11
 - openjdk10
 - openjdk11
-addons:
-  sonarcloud:
-    organization: "egorovpavel-github"
-    token: $SONAR_KEY
-script:
-  - sonar-scanner
-cache:
-  directories:
-  - '$HOME/.sonar/cache'
+jobs:
+  include:
+    - stage: Test
+      addons:
+        sonarcloud:
+          organization: "egorovpavel-github"
+          token: $SONAR_KEY
+      script:
+        - sonar-scanner
+      cache:
+        directories:
+        - '$HOME/.sonar/cache'
