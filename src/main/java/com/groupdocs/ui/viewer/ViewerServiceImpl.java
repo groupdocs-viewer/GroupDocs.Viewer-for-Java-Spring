@@ -56,12 +56,6 @@ public class ViewerServiceImpl implements ViewerService {
      */
     @PostConstruct
     public void init() {
-        // check files directory
-        if (StringUtils.isEmpty(viewerConfiguration.getFilesDirectory())) {
-            logger.error("Files directory must be specified!");
-            throw new IllegalStateException("Files directory must be specified!");
-        }
-
         try {
             // set GroupDocs license
             License license = new License();
@@ -73,7 +67,11 @@ public class ViewerServiceImpl implements ViewerService {
         try {
             // create viewer application configuration
             ViewerConfig config = new ViewerConfig();
-            config.setStoragePath(viewerConfiguration.getFilesDirectory());
+            String filesDirectory = viewerConfiguration.getFilesDirectory();
+            if (!StringUtils.isEmpty(filesDirectory) && !filesDirectory.endsWith(File.separator)) {
+                filesDirectory = filesDirectory + File.separator;
+            }
+            config.setStoragePath(filesDirectory);
             config.setUseCache(viewerConfiguration.isCache());
             config.getFontDirectories().add(viewerConfiguration.getFontsDirectory());
 
