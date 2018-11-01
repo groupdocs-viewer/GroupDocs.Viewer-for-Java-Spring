@@ -56,14 +56,12 @@ public class ViewerServiceImpl implements ViewerService {
      */
     @PostConstruct
     public void init() {
-        try {
-            // set GroupDocs license
-            License license = new License();
-            license.setLicense(globalConfiguration.getApplication().getLicensePath());
-        } catch (Throwable throwable) {
-            logger.error("Can not verify Viewer license!");
-        }
+        setLicense();
 
+        configure();
+    }
+
+    private void configure() {
         try {
             // create viewer application configuration
             ViewerConfig config = new ViewerConfig();
@@ -84,6 +82,16 @@ public class ViewerServiceImpl implements ViewerService {
             }
         } catch (Throwable throwable) {
             logger.error("Viewer wasn't initiate properly!");
+        }
+    }
+
+    private void setLicense() {
+        try {
+            // set GroupDocs license
+            License license = new License();
+            license.setLicense(globalConfiguration.getApplication().getLicensePath());
+        } catch (Throwable throwable) {
+            logger.error("Can not verify Viewer license!");
         }
     }
 
