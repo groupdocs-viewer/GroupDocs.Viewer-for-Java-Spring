@@ -56,24 +56,20 @@ public class ViewerServiceImpl implements ViewerService {
      */
     @PostConstruct
     public void init() {
-        // check files directory
-        if (StringUtils.isEmpty(viewerConfiguration.getFilesDirectory())) {
-            logger.error("Files directory must be specified!");
-            throw new IllegalStateException("Files directory must be specified!");
-        }
+        setLicense();
 
-        try {
-            // set GroupDocs license
-            License license = new License();
-            license.setLicense(globalConfiguration.getApplication().getLicensePath());
-        } catch (Throwable throwable) {
-            logger.error("Can not verify Viewer license!");
-        }
+        configure();
+    }
 
+    private void configure() {
         try {
             // create viewer application configuration
             ViewerConfig config = new ViewerConfig();
-            config.setStoragePath(viewerConfiguration.getFilesDirectory());
+            String filesDirectory = viewerConfiguration.getFilesDirectory();
+            if (!StringUtils.isEmpty(filesDirectory) && !filesDirectory.endsWith(File.separator)) {
+                filesDirectory = filesDirectory + File.separator;
+            }
+            config.setStoragePath(filesDirectory);
             config.setUseCache(viewerConfiguration.isCache());
             config.getFontDirectories().add(viewerConfiguration.getFontsDirectory());
 
@@ -86,6 +82,16 @@ public class ViewerServiceImpl implements ViewerService {
             }
         } catch (Throwable throwable) {
             logger.error("Viewer wasn't initiate properly!");
+        }
+    }
+
+    private void setLicense() {
+        try {
+            // set GroupDocs license
+            License license = new License();
+            license.setLicense(globalConfiguration.getApplication().getLicensePath());
+        } catch (Throwable throwable) {
+            logger.error("Can not verify Viewer license!");
         }
     }
 
