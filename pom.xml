@@ -6,7 +6,7 @@
 
     <groupId>com.groupdocs.ui</groupId>
     <artifactId>viewer-spring</artifactId>
-    <version>1.10.0</version>
+    <version>1.11.0</version>
     <packaging>jar</packaging>
 
     <name>GroupDocs.Viewer for Java Spring Sample</name>
@@ -134,13 +134,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.4.3</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <version>1.4.0.RELEASE</version>
-                    </dependency>
-                </dependencies>
                 <executions>
                     <execution>
                         <phase>package</phase>
