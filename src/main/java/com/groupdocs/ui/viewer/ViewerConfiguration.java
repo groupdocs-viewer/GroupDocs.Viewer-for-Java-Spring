@@ -3,6 +3,12 @@ package com.groupdocs.ui.viewer;
 import com.groupdocs.ui.config.CommonConfiguration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import javax.annotation.PostConstruct;
+
+import static com.groupdocs.ui.config.DefaultDirectories.defaultViewerDirectory;
+import static com.groupdocs.ui.config.DefaultDirectories.relativePathToAbsolute;
 
 @Component
 public class ViewerConfiguration extends CommonConfiguration {
@@ -36,6 +42,11 @@ public class ViewerConfiguration extends CommonConfiguration {
 
     @Value("#{new Boolean('${viewer.cache}')}")
     private boolean cache;
+
+    @PostConstruct
+    public void init() {
+        this.filesDirectory = StringUtils.isEmpty(this.filesDirectory) ? defaultViewerDirectory() : relativePathToAbsolute(this.filesDirectory);
+    }
 
     public String getFilesDirectory() {
         return filesDirectory;
