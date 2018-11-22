@@ -37,12 +37,14 @@ public class DefaultDirectories {
     public static String relativePathToAbsolute(String path) {
         Iterable<Path> rootDirectories = FileSystems.getDefault().getRootDirectories();
 
-        if (!StringUtils.isEmpty(path)) {
-            for (Path root : rootDirectories) {
-                if (path.startsWith(root.toString())) {
-                    makeDirs(new File(path));
-                    return path;
-                }
+        if (StringUtils.isEmpty(path)) {
+            return FileSystems.getDefault().getPath("").toAbsolutePath().toString();
+        }
+
+        for (Path root : rootDirectories) {
+            if (path.startsWith(root.toString())) {
+                makeDirs(new File(path));
+                return path;
             }
         }
 
