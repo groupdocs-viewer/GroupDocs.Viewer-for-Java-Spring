@@ -15,8 +15,8 @@ server:
 ################################################
 application:
   # License path
-  # Absolute path to GroupDocs license file
-  licensePath:  C:/GroupDocs/Java/Viewer/GroupDocs.Viewer.Java.lic
+  # Absolute or relative path to GroupDocs license file
+  licensePath: Licenses/GroupDocs.Viewer.Java.lic
 
 ################################################
 # Common configurations
@@ -47,8 +47,8 @@ common:
 ################################################
 viewer:
   # Files directory path
-  # Absolute path to files directory
-  filesDirectory: C:/GroupDocs/Documents/
+  # Absolute or relative path to files directory
+  filesDirectory: DocumentSamples
   # Fonts path
   # Absolute path to custom fonts directory
   fontsDirectory:

@@ -53,7 +53,7 @@ public class ViewerController {
      * @return template name
      */
     @RequestMapping(method = RequestMethod.GET)
-    public  String getView(Map<String, Object> model) {
+    public String getView(Map<String, Object> model) {
         model.put("globalConfiguration", globalConfiguration);
         logger.debug("viewer config: {}", viewerService.getViewerConfiguration());
         model.put("viewerConfiguration", viewerService.getViewerConfiguration());
