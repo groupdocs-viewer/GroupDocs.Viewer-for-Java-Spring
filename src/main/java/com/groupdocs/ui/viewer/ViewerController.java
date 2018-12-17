@@ -6,13 +6,12 @@ import com.groupdocs.ui.model.request.FileTreeRequest;
 import com.groupdocs.ui.model.request.LoadDocumentPageRequest;
 import com.groupdocs.ui.model.request.LoadDocumentRequest;
 import com.groupdocs.ui.model.response.FileDescriptionEntity;
+import com.groupdocs.ui.model.response.LoadDocumentEntity;
 import com.groupdocs.ui.model.response.LoadedPageEntity;
 import com.groupdocs.ui.model.response.UploadedDocumentEntity;
 import com.groupdocs.ui.util.Utils;
 import com.groupdocs.ui.viewer.model.request.RotateDocumentPagesRequest;
 import com.groupdocs.ui.viewer.model.response.RotatedPageEntity;
-import com.groupdocs.viewer.domain.PageData;
-import com.groupdocs.viewer.domain.containers.DocumentInfoContainer;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,9 +76,8 @@ public class ViewerController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/loadDocumentDescription", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<PageData> loadDocumentDescription(@RequestBody LoadDocumentRequest loadDocumentRequest){
-        DocumentInfoContainer documentInfoContainer = viewerService.loadDocument(loadDocumentRequest);
-        return documentInfoContainer.getPages();
+    public LoadDocumentEntity loadDocumentDescription(@RequestBody LoadDocumentRequest loadDocumentRequest){
+        return viewerService.loadDocument(loadDocumentRequest);
     }
 
     /**
