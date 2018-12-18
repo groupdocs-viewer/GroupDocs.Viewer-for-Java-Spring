@@ -6,13 +6,16 @@ import com.groupdocs.ui.exception.TotalGroupDocsException;
 import com.groupdocs.ui.model.request.LoadDocumentPageRequest;
 import com.groupdocs.ui.model.request.LoadDocumentRequest;
 import com.groupdocs.ui.model.response.FileDescriptionEntity;
+import com.groupdocs.ui.model.response.LoadDocumentEntity;
 import com.groupdocs.ui.model.response.LoadedPageEntity;
+import com.groupdocs.ui.model.response.PageDescriptionEntity;
 import com.groupdocs.ui.viewer.model.request.RotateDocumentPagesRequest;
 import com.groupdocs.ui.viewer.model.response.RotatedPageEntity;
 import com.groupdocs.viewer.config.ViewerConfig;
 import com.groupdocs.viewer.converter.options.HtmlOptions;
 import com.groupdocs.viewer.converter.options.ImageOptions;
 import com.groupdocs.viewer.domain.FileDescription;
+import com.groupdocs.viewer.domain.PageData;
 import com.groupdocs.viewer.domain.containers.DocumentInfoContainer;
 import com.groupdocs.viewer.domain.containers.FileListContainer;
 import com.groupdocs.viewer.domain.html.PageHtml;
@@ -140,7 +143,7 @@ public class ViewerServiceImpl implements ViewerService {
      * {@inheritDoc}
      */
     @Override
-    public DocumentInfoContainer loadDocument(LoadDocumentRequest loadDocumentRequest) {
+    public LoadDocumentEntity loadDocument(LoadDocumentRequest loadDocumentRequest) {
         // set request parameters
         String documentGuid = loadDocumentRequest.getGuid();
         String password = loadDocumentRequest.getPassword();
@@ -160,8 +163,21 @@ public class ViewerServiceImpl implements ViewerService {
             }
             // get document info container
             DocumentInfoContainer documentInfoContainer = viewerHandler.getDocumentInfo(documentGuid, documentInfoOptions);
+            List<PageDescriptionEntity> pages = new ArrayList<>();
+            for (PageData page: documentInfoContainer.getPages()) {
+                PageDescriptionEntity pageDescriptionEntity = new PageDescriptionEntity();
+                pageDescriptionEntity.setNumber(page.getNumber());
+                pageDescriptionEntity.setAngle(page.getAngle());
+                pageDescriptionEntity.setHeight(page.getHeight());
+                pageDescriptionEntity.setWidth(page.getWidth());
+                pages.add(pageDescriptionEntity);
+            }
+
+            LoadDocumentEntity loadDocumentEntity = new LoadDocumentEntity();
+            loadDocumentEntity.setGuid(loadDocumentRequest.getGuid());
+            loadDocumentEntity.setPages(pages);
             // return document description
-            return documentInfoContainer;
+            return loadDocumentEntity;
         } catch (GroupDocsViewerException ex) {
             // Set exception message
             String message = ex.getMessage();

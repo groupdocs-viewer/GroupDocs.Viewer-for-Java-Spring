@@ -1,0 +1,45 @@
+package com.groupdocs.ui.model.response;
+
+/**
+ * PageDescriptionEntity
+ *
+ * @author Aspose Pty Ltd
+ */
+public class PageDescriptionEntity {
+    private int angle;
+    private double width;
+    private double height;
+    private int number;
+
+    public int getAngle() {
+        return angle;
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+}
