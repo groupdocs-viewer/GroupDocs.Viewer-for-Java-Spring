@@ -18,8 +18,7 @@ jobs:
       deploy:
         provider: releases
         overwrite: true
-        tag_name: $TRAVIS_TAG
-        name: "LATEST"
+        name: $TRAVIS_TAG
         skip_cleanup: true
         draft: true
         api_key:
