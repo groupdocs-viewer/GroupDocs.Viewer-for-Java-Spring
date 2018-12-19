@@ -9,8 +9,6 @@ jdk:
   - openjdk11
 jobs:
   include:
-    - stage: "Tests"
-      name: "Integration Tests"
     - stage: "Release"
       jdk: oraclejdk8
       script: mvn clean package
