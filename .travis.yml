@@ -9,6 +9,7 @@ jdk:
 - openjdk11
 jobs:
   include:
+    - script: mvn test -B
     - stage: GitHub Release
         before_deploy:
           - export TRAVIS_TAG=latest
