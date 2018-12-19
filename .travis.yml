@@ -1,19 +1,28 @@
 dist: trusty
 language: java
-jdk:
-- oraclejdk8
-- oraclejdk9
-- openjdk8
-- oraclejdk11
-- openjdk10
-- openjdk11
-deploy:
-  provider: releases
-  overwrite: true
-  draft: true
-  api_key:
-    secure: GfKdL03uJBUm/FIkQgjjmkll/nTL842KWLMJMnZDb8nJ5hJ/V8Rk8HrgbqRHjmH/9sHGCTemvcuT7NqJv89grdFyedVAUqnXkn4zBOxzRf7ccGhxrKYi4G38uNzi1erQs3yJurO1vxNnjBk29392tDQjxV9sXpv25rRPUtamHAFl2T//O89XT+HorlgBwt/Ck3APVM9pM/pl/Dj9w4SgJmuflAF/kYgKRgFr/6th0YgLDJCNvtMaHtprTgzb6eqtbaawKBphngglw/V8NTVet03cqmVMzG0Je75lX8ZMlMYakOhbwG3N1wzmsIsxLWSvuXzwmS4Me4dIq0gQMJ1ilirYPV0GYFynLdd0yRjv4TL9YujhEuE60OsltbkgTPGcwefx1ojb60WP4LcpGjmQRngrgODLv00tWPrAXb6gRY2OAh6lB8YuCNV2es9TeODf9eRbsKvIvGt5YLCXVGbUe0LVuo1qdWePGUy+0LwMMLdpQRi/JT7y7SxiIctEc4NWsLeXr7bvDwGi6j6wr6HidJz92t7B6x7R3334v1XaknSZfn3uPVyOrkBop3bcnhoG5c8ujzjTGnWg8p4+du89i3hWa1WCTIOdvMVBjKPXT+d/V+H7TdEL+Xfi72UP3VUGZRqzei68+NbTJkCj/SoIBzx6o7Le+ab3qLjfL3/wAeA=
-  file: target/viewer-spring-1.14.0.jar
-  on:
-    repo: groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring
-    branch: release-publishing
+jobs:
+  include:
+    - stage: "Tests"
+      name: "Integration Tests"
+      jdk:
+        - oraclejdk8
+        - oraclejdk9
+        - openjdk8
+        - oraclejdk11
+        - openjdk10
+        - openjdk11
+      script: mvn test -B
+    - stage: "Release"
+      jdk: oraclejdk8
+      script: mvn clean package
+      deploy:
+        provider: releases
+        overwrite: true
+        skip_cleanup: true
+        draft: true
+        api_key:
+          secure: GfKdL03uJBUm/FIkQgjjmkll/nTL842KWLMJMnZDb8nJ5hJ/V8Rk8HrgbqRHjmH/9sHGCTemvcuT7NqJv89grdFyedVAUqnXkn4zBOxzRf7ccGhxrKYi4G38uNzi1erQs3yJurO1vxNnjBk29392tDQjxV9sXpv25rRPUtamHAFl2T//O89XT+HorlgBwt/Ck3APVM9pM/pl/Dj9w4SgJmuflAF/kYgKRgFr/6th0YgLDJCNvtMaHtprTgzb6eqtbaawKBphngglw/V8NTVet03cqmVMzG0Je75lX8ZMlMYakOhbwG3N1wzmsIsxLWSvuXzwmS4Me4dIq0gQMJ1ilirYPV0GYFynLdd0yRjv4TL9YujhEuE60OsltbkgTPGcwefx1ojb60WP4LcpGjmQRngrgODLv00tWPrAXb6gRY2OAh6lB8YuCNV2es9TeODf9eRbsKvIvGt5YLCXVGbUe0LVuo1qdWePGUy+0LwMMLdpQRi/JT7y7SxiIctEc4NWsLeXr7bvDwGi6j6wr6HidJz92t7B6x7R3334v1XaknSZfn3uPVyOrkBop3bcnhoG5c8ujzjTGnWg8p4+du89i3hWa1WCTIOdvMVBjKPXT+d/V+H7TdEL+Xfi72UP3VUGZRqzei68+NbTJkCj/SoIBzx6o7Le+ab3qLjfL3/wAeA=
+        file: target/viewer-spring-1.14.0.jar
+        on:
+          repo: groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring
+          branch: release-publishing
