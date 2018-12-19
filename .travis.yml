@@ -14,6 +14,8 @@ jobs:
     - stage: "Release"
       jdk: oraclejdk8
       script: mvn clean package
+      before_deploy:
+        - export TRAVIS_TAG=$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)
       deploy:
         provider: releases
         overwrite: true
