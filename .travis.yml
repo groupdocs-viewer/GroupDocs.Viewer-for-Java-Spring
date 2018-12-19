@@ -1,10 +1,16 @@
 dist: trusty
 language: java
+jdk:
+  - oraclejdk8
+  - oraclejdk9
+  - openjdk8
+  - oraclejdk11
+  - openjdk10
+  - openjdk11
 jobs:
   include:
     - stage: "Tests"
       name: "Integration Tests"
-      jdk: oraclejdk8
     - stage: "Release"
       jdk: oraclejdk8
       script: mvn clean package
