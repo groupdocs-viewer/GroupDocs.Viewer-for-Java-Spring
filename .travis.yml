@@ -11,7 +11,6 @@ jobs:
         - oraclejdk11
         - openjdk10
         - openjdk11
-      script: mvn test -B
     - stage: "Release"
       jdk: oraclejdk8
       script: mvn clean package
