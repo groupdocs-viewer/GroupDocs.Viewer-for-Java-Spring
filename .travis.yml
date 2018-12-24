@@ -10,11 +10,11 @@ jdk:
 jobs:
   include:
   - stage: Tag Release
-    if: type = push AND branch = master AND commit_message !~ /^Travis bot released/
+    if: type = push AND branch = release-publishing AND commit_message !~ /^Travis bot released/
     install: skip
-    script: git checkout master && git reset --hard $sha1 && git config --global push.followTags true && git config --global user.email "travis@travis-ci.org" && git config --global user.name "Travis CI" && export current_version=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec) && echo "current version ${current_version}" && export minor=$(echo $current_version | sed "s/^[0-9]\{1,\}\.[0-9]\{1,\}\.\([0-9]\{1,\}\)/\1/") && export major=$(echo $current_version | sed "s/^\([0-9]\{1,\}\.[0-9]\{1,\}\)\.[0-9]\{1,\}/\1/") && export next_version=$major.$((minor+1)) && echo "next version ${next_version}" && sed -i.bak "s/###### version $current_version/###### version $next_version/g" README.md && rm README.md.bak && sed -i.bak "s/^    <version>$current_version<\\/version>/    <version>$next_version<\\/version>/g" pom.xml && rm pom.xml.bak && git status && git commit -am "Travis bot released $next_version" && git tag -a $next_version -m "Automated release" && git remote add target https://${GH_TOKEN}@github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring.git > /dev/null 2>&1 && git remote -v && git push --set-upstream target master
+    script: git checkout release-publishing && git reset --hard $sha1 && git config --global push.followTags true && git config --global user.email "travis@travis-ci.org" && git config --global user.name "Travis CI" && export current_version=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec) && echo "current version ${current_version}" && export minor=$(echo $current_version | sed "s/^[0-9]\{1,\}\.[0-9]\{1,\}\.\([0-9]\{1,\}\)/\1/") && export major=$(echo $current_version | sed "s/^\([0-9]\{1,\}\.[0-9]\{1,\}\)\.[0-9]\{1,\}/\1/") && export next_version=$major.$((minor+1)) && echo "next version ${next_version}" && sed -i.bak "s/###### version $current_version/###### version $next_version/g" README.md && rm README.md.bak && sed -i.bak "s/^    <version>$current_version<\\/version>/    <version>$next_version<\\/version>/g" pom.xml && rm pom.xml.bak && git status && git commit -am "Travis bot released $next_version" && git tag -a $next_version -m "Automated release" && git remote add target https://${GH_TOKEN}@github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring.git > /dev/null 2>&1 && git remote -v && git push --set-upstream target release-publishing
   - stage: Release
-    if: type = push AND branch = master AND commit_message =~ /^Travis bot released/
+    if: type = push AND branch = release-publishing AND commit_message =~ /^Travis bot released/
     install: skip
     jdk: oraclejdk8
     script: 'mvn clean package && mkdir -p target/release/DocumentSamples && mkdir -p target/release/Licenses && cp target/viewer-spring-*.jar target/release && cp configuration.yml target/release && cd target && tar -zcvf release.tar.gz release && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -t groupdocs/viewer-for-java-spring . && docker push groupdocs/viewer-for-java-spring'
@@ -27,7 +27,7 @@ jobs:
       file: target/release.tar.gz
       on:
         repo: groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring
-        branch: master
+        branch: release-publishing
 env:
   global:
   - secure: pezYBJqSNGe9GIAlGriLYNaeW/2f4/l2BsuVpBxSDE2z7rjwzvL1xggxBCnkvBWVcGPPoBpAgO5GVTSR0kZACrF72GcNCCTvMUp5dq19tawiUdr9giDJdowMzL2nAgk9ZXF/JshZI//nfbIC8ZCIZHwdpX0gDsbh4aVTOC9nRyDPaCGDwyHGj9abi9Ord7Kna/62YCqa/QcwtTRTWzms/B9xDKtQDz7AbBjBqgxehTsmjanS6wQKtKLaIxhDY6cL+NZxe0arSlMF/BKLN8wphq1EkuHsvvdaLKMGRKJOBI4j2qkNie6aPalpAxSwEF2A7mFlVSPSHT40R/8JcmbHM4k2HsVSBmEFdmrMyua3zbC3DDD/9U3GPuoQWaLmJpbNUvy2xAbyrVD7uBRS5f6s+ovaF3g+8bjYvVdL9ndnMt+WcOsSx7RKp15M0FlTJTGqnweL1Svp1wm+y3vRmjxVJUNEGj3pYrSALouhe0gbVsnhOnO+wTiscS5RGrHd7htMnUOJTWh5w0+IELmXnO4KkC3Qs9TXwFRcFxHFL2s/wedOjfZ3WDikSevTNa6o32g/MbAGai62fNcFp4VIwpsJ0nQDaTT1TC2Ca5RZBfa2E4X94iPUK5DNEQtXcWjd1NOzeJdvzKLsoSANitKtoaECpvJ6Gt2PO0MapjaKF92OKFk=
