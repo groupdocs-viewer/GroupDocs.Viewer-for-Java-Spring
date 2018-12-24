@@ -19,7 +19,7 @@ jobs:
     if: type = push AND branch = release-publishing AND commit_message =~ /^Travis bot released/
     install: skip
     jdk: oraclejdk8
-    script: mvn clean package && mkdir -p target/release/DocumentSamples && mkdir -p target/release/Licenses && cp target/viewer-spring-*.jar target/release && cp configuration.yml target/release && cd target && tar -zcvf release.tar.gz release && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -t groupdocs/viewer-for-java-spring . && docker push groupdocs/viewer-for-java-spring
+    script: mvn clean package && mkdir -p target/release/DocumentSamples && mkdir -p target/release/Licenses && cp target/viewer-spring-*.jar target/release && cp configuration.yml target/release && cd target && tar -zcvf release.tar.gz release && cd .. && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker build -t groupdocs/viewer-for-java-spring . && docker push groupdocs/viewer-for-java-spring
     deploy:
       provider: releases
       overwrite: true
