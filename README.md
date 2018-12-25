@@ -1,4 +1,4 @@
-![Alt text](https://raw.githubusercontent.com/groupdocs-viewer/groupdocs-viewer.github.io/master/resources/image/banner.png "GroupDocs.Viewer")
+![GroupDocs.Viewer](https://raw.githubusercontent.com/groupdocs-viewer/groupdocs-viewer.github.io/master/resources/image/banner.png "GroupDocs.Viewer")
 # GroupDocs.Viewer-for-Java-Spring Example
 ###### version 1.14.0
 
@@ -46,7 +46,7 @@ https://www.youtube.com/watch?v=NnZaMNUC6o0
 
 # How to run
 
-For all methods below you can adjust settings in `configuration.yml`. By default sample will lookup for license file in `./Licenses` folder, so you can simply put your license file in this folder or specify relative/absolute path by setting `licensePath` in `configuration.yml`. 
+For all methods below you can adjust settings in `configuration.yml`. By default in this sample will lookup for license file in `./Licenses` folder, so you can simply put your license file in that folder or specify relative/absolute path by setting `licensePath` value in `configuration.yml`. 
 
 
 ## Build from source
