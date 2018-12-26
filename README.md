@@ -83,7 +83,7 @@ docker run -p 8080:8080 -v `pwd`/DocumentSamples:/home/groupdocs/app/DocumentSam
 ## Open http://localhost:8080/viewer/ in your favorite browser.
 ```
 
-#### Cnfiguration
+#### Configuration
 For all methods above you can adjust settings in `configuration.yml`. By default in this sample will lookup for license file in `./Licenses` folder, so you can simply put your license file in that folder or specify relative/absolute path by setting `licensePath` value in `configuration.yml`. 
 
 
