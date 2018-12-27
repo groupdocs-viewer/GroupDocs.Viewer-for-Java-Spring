@@ -3,6 +3,7 @@
 ################################################
 server:
   type: simple
+  hostAddress: localhost
   applicationContextPath: /
   adminContextPath: /admin
   connector:
@@ -16,7 +17,7 @@ server:
 application:
   # License path
   # Absolute or relative path to GroupDocs license file
-  licensePath: Licenses/GroupDocs.Viewer.Java.lic
+  licensePath: 
 
 ################################################
 # Common configurations

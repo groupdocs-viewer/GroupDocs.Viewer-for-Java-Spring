@@ -1,4 +1,4 @@
-![Alt text](https://raw.githubusercontent.com/groupdocs-viewer/groupdocs-viewer.github.io/master/resources/image/banner.png "GroupDocs.Viewer")
+![GroupDocs.Viewer](https://raw.githubusercontent.com/groupdocs-viewer/groupdocs-viewer.github.io/master/resources/image/banner.png "GroupDocs.Viewer")
 # GroupDocs.Viewer-for-Java-Spring Example
 ###### version 1.14.0
 
@@ -44,16 +44,48 @@ https://www.youtube.com/watch?v=NnZaMNUC6o0
 - Cross-browser support (Safari, Chrome, Opera, Firefox)
 - Cross-platform support (Windows, Linux, MacOS)
 
-
 ## How to run
-1. Download/Clone GroupDocs.Viewer for Java Spring Sample.
-2. Extract/Copy GroupDocs.Viewer for Java Spring Sample to working directory.
-3. Navigate to GroupDocs.Viewer for Java Spring Sample root directory.
-4. Update parameters in `configuration.yml` to meet your requirements.
-5. Open console and type `cd 'GroupDocs.Viewer for Java Spring Sample root directory'`, press enter.
-6. From console type following command: `mvn clean spring-boot:run`, press enter.
-7. Go to `http://localhost:{PORT}/viewer/`.
-PORT - port number specified in `configuration.yml` (by default http://localhost:8080/viewer/).
+
+You can run this sample by one of following methods
+
+#### Build from source
+
+Download [source code](https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/archive/master.zip) from github or clone this repository.
+
+```bash
+git clone https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring
+cd GroupDocs.Viewer-for-Java-Spring
+mvn clean spring-boot:run
+## Open http://localhost:8080/viewer/ in your favorite browser.
+```
+
+#### Binary release (with all dependencies)
+
+Download [latest release](https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/releases/latest) from [releases page](https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/releases). 
+
+**Note**: This method is **recommended** for running this sample behind firewall.
+
+```bash
+curl -J -L -o release.tar.gz https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/releases/download/1.14.0/release.tar.gz
+tar -xvzf release.tar.gz
+cd release
+java -jar viewer-spring-1.14.0.jar configuration.yaml
+## Open http://localhost:8080/viewer/ in your favorite browser.
+```
+
+#### Docker image
+Use [docker](https://www.docker.com/) image.
+
+```bash
+mkdir DocumentSamples
+mkdir Licenses
+docker run -p 8080:8080 -v `pwd`/DocumentSamples:/home/groupdocs/app/DocumentSamples -v `pwd`/Licenses:/home/groupdocs/app/Licenses groupdocs/viewer-for-java-spring
+## Open http://localhost:8080/viewer/ in your favorite browser.
+```
+
+#### Configuration
+For all methods above you can adjust settings in `configuration.yml`. By default in this sample will lookup for license file in `./Licenses` folder, so you can simply put your license file in that folder or specify relative/absolute path by setting `licensePath` value in `configuration.yml`. 
+
 
 
 ## Resources
