@@ -35,7 +35,6 @@ public class Utils {
     public static final FileNameComparator FILE_NAME_COMPARATOR = new FileNameComparator();
     public static final FileTypeComparator FILE_TYPE_COMPARATOR = new FileTypeComparator();
 
-
     /**
      * Read stream and convert to string
      *

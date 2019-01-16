@@ -145,7 +145,7 @@ public class ViewerServiceImpl implements ViewerService {
      * {@inheritDoc}
      */
     @Override
-    public LoadDocumentEntity loadDocument(LoadDocumentRequest loadDocumentRequest) {
+    public LoadDocumentEntity loadDocument(LoadDocumentRequest loadDocumentRequest, boolean loadAllPages) {
         // set request parameters
         String documentGuid = loadDocumentRequest.getGuid();
         String password = loadDocumentRequest.getPassword();
@@ -163,7 +163,7 @@ public class ViewerServiceImpl implements ViewerService {
             DocumentInfoContainer documentInfoContainer = viewerHandler.getDocumentInfo(documentGuid, documentInfoOptions);
             List<Page> pagesData = Collections.EMPTY_LIST;
 
-            if (viewerConfiguration.getPreloadPageCount() == 0) {
+            if (loadAllPages) {
                 pagesData = getPagesData(documentGuid, password);
             }
 
