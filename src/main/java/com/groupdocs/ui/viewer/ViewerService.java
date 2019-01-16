@@ -1,10 +1,10 @@
 package com.groupdocs.ui.viewer;
 
-import com.groupdocs.ui.model.request.LoadDocumentPageRequest;
-import com.groupdocs.ui.model.request.LoadDocumentRequest;
 import com.groupdocs.ui.model.response.FileDescriptionEntity;
 import com.groupdocs.ui.model.response.LoadDocumentEntity;
-import com.groupdocs.ui.model.response.LoadedPageEntity;
+import com.groupdocs.ui.model.response.PageDescriptionEntity;
+import com.groupdocs.ui.model.request.LoadDocumentPageRequest;
+import com.groupdocs.ui.model.request.LoadDocumentRequest;
 import com.groupdocs.ui.viewer.model.request.RotateDocumentPagesRequest;
 import com.groupdocs.ui.viewer.model.response.RotatedPageEntity;
 
@@ -41,7 +41,7 @@ public interface ViewerService {
      * @param loadDocumentPageRequest document page request data
      * @return document page info
      */
-    LoadedPageEntity loadDocumentPage(LoadDocumentPageRequest loadDocumentPageRequest);
+    PageDescriptionEntity loadDocumentPage(LoadDocumentPageRequest loadDocumentPageRequest);
 
     /**
      * Rotate document pages

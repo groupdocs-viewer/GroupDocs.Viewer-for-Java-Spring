@@ -6,6 +6,10 @@ package com.groupdocs.ui.model.response;
  * @author Aspose Pty Ltd
  */
 public class PageDescriptionEntity {
+    /**
+     * Page data
+     */
+    private String data;
     private int angle;
     private double width;
     private double height;
@@ -41,5 +45,13 @@ public class PageDescriptionEntity {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 }

@@ -7,7 +7,7 @@ package com.groupdocs.ui.viewer.model.response;
  */
 public class RotatedPageEntity {
     private int pageNumber;
-    private String angle;
+    private int angle;
 
     /**
      * Get page number
@@ -29,7 +29,7 @@ public class RotatedPageEntity {
      * Get rotation angle
      * @return angle (from 0 to 270 deg)
      */
-    public String getAngle() {
+    public int getAngle() {
         return angle;
     }
 
@@ -37,7 +37,7 @@ public class RotatedPageEntity {
      * set rotation angle
      * @param angle angle (from 0 to 270 deg)
      */
-    public void setAngle(String angle) {
+    public void setAngle(int angle) {
         this.angle = angle;
     }
 }
