@@ -23,12 +23,10 @@ import com.groupdocs.viewer.domain.options.DocumentInfoOptions;
 import com.groupdocs.viewer.domain.options.FileListOptions;
 import com.groupdocs.viewer.domain.options.RotatePageOptions;
 import com.groupdocs.viewer.exception.GroupDocsViewerException;
-import com.groupdocs.viewer.exception.InvalidPasswordException;
 import com.groupdocs.viewer.handler.ViewerHandler;
 import com.groupdocs.viewer.handler.ViewerHtmlHandler;
 import com.groupdocs.viewer.handler.ViewerImageHandler;
 import com.groupdocs.viewer.licensing.License;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +36,12 @@ import org.springframework.util.StringUtils;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
-import static com.groupdocs.ui.exception.PasswordExceptions.INCORRECT_PASSWORD;
-import static com.groupdocs.ui.exception.PasswordExceptions.PASSWORD_REQUIRED;
+import static com.groupdocs.ui.util.Utils.getExceptionMessage;
+import static com.groupdocs.ui.util.Utils.getStringFromStream;
 import static com.groupdocs.ui.viewer.ViewerOptionsFactory.*;
 
 @Service
@@ -187,15 +183,13 @@ public class ViewerServiceImpl implements ViewerService {
     }
 
     private List<Page> getPagesData(String documentGuid, String password) throws Exception {
-        List<Page> pagesData;
         if (viewerConfiguration.isHtmlMode()) {
             HtmlOptions htmlOptions = createCommonHtmlOptions(password);
-            pagesData = viewerHandler.getPages(documentGuid, htmlOptions);
+            return viewerHandler.getPages(documentGuid, htmlOptions);
         } else {
             ImageOptions imageOptions = createCommonImageOptions(password);
-            pagesData = viewerHandler.getPages(documentGuid, imageOptions);
+            return viewerHandler.getPages(documentGuid, imageOptions);
         }
-        return pagesData;
     }
 
     /**
@@ -267,6 +261,7 @@ public class ViewerServiceImpl implements ViewerService {
             throw new TotalGroupDocsException(ex.getMessage(), ex);
         }
     }
+
     private DocumentInfoOptions getDocumentInfoOptions(String documentGuid, String password) {
         DocumentInfoOptions documentInfoOptions = new DocumentInfoOptions(documentGuid);
         // set password for protected document
@@ -274,19 +269,6 @@ public class ViewerServiceImpl implements ViewerService {
             documentInfoOptions.setPassword(password);
         }
         return documentInfoOptions;
-    }
-
-    private String getExceptionMessage(String password, GroupDocsViewerException ex) {
-        // Set exception message
-        String message = ex.getMessage();
-        if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && password.isEmpty()) {
-            message = PASSWORD_REQUIRED;
-        } else if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && !password.isEmpty()) {
-            message = INCORRECT_PASSWORD;
-        } else {
-            logger.error(message, ex);
-        }
-        return message;
     }
 
     private RotatedPageEntity getRotatedPageEntity(int pageNumber, int resultAngle) {
@@ -330,21 +312,11 @@ public class ViewerServiceImpl implements ViewerService {
         return pageDescriptionEntity;
     }
 
-    private String getStringFromStream(InputStream inputStream) throws IOException {
-        byte[] bytes = IOUtils.toByteArray(inputStream);
-        // encode ByteArray into String
-        return Base64.getEncoder().encodeToString(bytes);
-    }
-
     /**
      * {@inheritDoc}
      */
     @Override
     public ViewerConfiguration getViewerConfiguration() {
         return viewerConfiguration;
-    }
-
-    public void setViewerConfiguration(ViewerConfiguration viewerConfiguration) {
-        this.viewerConfiguration = viewerConfiguration;
     }
 }

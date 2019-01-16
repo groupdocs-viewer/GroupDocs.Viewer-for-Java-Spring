@@ -1,7 +1,10 @@
 package com.groupdocs.ui.util;
 
 import com.groupdocs.ui.exception.TotalGroupDocsException;
+import com.groupdocs.viewer.exception.GroupDocsViewerException;
+import com.groupdocs.viewer.exception.InvalidPasswordException;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -17,10 +20,13 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import static com.groupdocs.ui.exception.PasswordExceptions.INCORRECT_PASSWORD;
+import static com.groupdocs.ui.exception.PasswordExceptions.PASSWORD_REQUIRED;
 import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
 
 public class Utils {
@@ -28,6 +34,40 @@ public class Utils {
 
     public static final FileNameComparator FILE_NAME_COMPARATOR = new FileNameComparator();
     public static final FileTypeComparator FILE_TYPE_COMPARATOR = new FileTypeComparator();
+
+
+    /**
+     * Read stream and convert to string
+     *
+     * @param inputStream
+     * @return
+     * @throws IOException
+     */
+    public static String getStringFromStream(InputStream inputStream) throws IOException {
+        byte[] bytes = IOUtils.toByteArray(inputStream);
+        // encode ByteArray into String
+        return Base64.getEncoder().encodeToString(bytes);
+    }
+
+    /**
+     * Get correct message for security exceptions
+     *
+     * @param password
+     * @param ex
+     * @return
+     */
+    public static String getExceptionMessage(String password, GroupDocsViewerException ex) {
+        // Set exception message
+        String message = ex.getMessage();
+        if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && password.isEmpty()) {
+            message = PASSWORD_REQUIRED;
+        } else if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && !password.isEmpty()) {
+            message = INCORRECT_PASSWORD;
+        } else {
+            logger.error(message, ex);
+        }
+        return message;
+    }
 
     /**
      * Fill header HTTP response with file data
