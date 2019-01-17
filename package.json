@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring#readme",
   "dependencies": {
-    "@groupdocs.examples.jquery/common": "^0.6.0",
-    "@groupdocs.examples.jquery/viewer": "^0.6.0"
+    "@groupdocs.examples.jquery/common": "^0.7.0",
+    "@groupdocs.examples.jquery/viewer": "^0.7.0"
   },
   "devDependencies": {
     "gulp": "^4.0.0"

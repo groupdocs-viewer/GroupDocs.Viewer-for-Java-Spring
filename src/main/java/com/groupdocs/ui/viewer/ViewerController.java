@@ -77,7 +77,18 @@ public class ViewerController {
     @RequestMapping(method = RequestMethod.POST, value = "/loadDocumentDescription", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @ResponseBody
     public LoadDocumentEntity loadDocumentDescription(@RequestBody LoadDocumentRequest loadDocumentRequest){
-        return viewerService.loadDocument(loadDocumentRequest);
+        return viewerService.loadDocument(loadDocumentRequest, viewerService.getViewerConfiguration().getPreloadPageCount() == 0);
+    }
+
+    /**
+     * Get all pages for thumbnails
+     * @param loadDocumentRequest
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/loadThumbnails", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public LoadDocumentEntity loadThumbnails(@RequestBody LoadDocumentRequest loadDocumentRequest){
+        return viewerService.loadDocument(loadDocumentRequest, true);
     }
 
     /**
