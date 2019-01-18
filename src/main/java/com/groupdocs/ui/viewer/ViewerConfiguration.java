@@ -43,6 +43,9 @@ public class ViewerConfiguration extends CommonConfiguration {
     @Value("#{new Boolean('${viewer.cache}')}")
     private boolean cache;
 
+    @Value("#{new Boolean('${viewer.saveRotateState}')}")
+    private boolean saveRotateState = true;
+
     @PostConstruct
     public void init() {
         this.filesDirectory = StringUtils.isEmpty(this.filesDirectory) ? defaultViewerDirectory() : relativePathToAbsolute(this.filesDirectory);
@@ -128,6 +131,14 @@ public class ViewerConfiguration extends CommonConfiguration {
         this.cache = cache;
     }
 
+    public boolean isSaveRotateState() {
+        return saveRotateState;
+    }
+
+    public void setSaveRotateState(boolean saveRotateState) {
+        this.saveRotateState = saveRotateState;
+    }
+
     @Override
     public String toString() {
         return super.toString() +
@@ -142,6 +153,7 @@ public class ViewerConfiguration extends CommonConfiguration {
                 ", defaultDocument='" + defaultDocument + '\'' +
                 ", htmlMode=" + htmlMode +
                 ", cache=" + cache +
+                ", saveRotateState=" + saveRotateState +
                 '}';
     }
 }
