@@ -6,6 +6,8 @@ import org.springframework.beans.factory.config.YamlProcessor;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
@@ -18,7 +20,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 
 @SpringBootApplication
-public class Application {
+public class Application extends SpringBootServletInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
@@ -32,6 +34,11 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
+
     @Bean
     public static PropertySourcesPlaceholderConfigurer properties() {
         PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
@@ -41,7 +48,7 @@ public class Application {
         return propertySourcesPlaceholderConfigurer;
     }
 
-    private static YamlPropertiesFactoryBean getYamlPropertiesFactoryBean() {
+    public static YamlPropertiesFactoryBean getYamlPropertiesFactoryBean() {
         YamlPropertiesFactoryBean propertiesFactoryBean = new YamlPropertiesFactoryBean();
         ClassPathResource defaultResource = new ClassPathResource(DEFAULT_CONFIGURATION_FILE);
 

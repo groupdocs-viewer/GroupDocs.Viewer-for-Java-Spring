@@ -2,12 +2,9 @@
 # Server configurations
 ################################################
 server:
-  type: simple
-  hostAddress: localhost
-  applicationContextPath: /
-  adminContextPath: /admin
   connector:
-    type: http
+    # Changing port is available for embedded server only
+    # Is is not possible to change port for deploying application on external server
     port: 8080
 
 
