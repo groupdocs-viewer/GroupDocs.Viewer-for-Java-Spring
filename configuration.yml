@@ -81,3 +81,5 @@ viewer:
   cache: true
   # Set true to enable page rotation saving
   saveRotateState: true
+  # Enter text which will be used as a watermark
+  watermarkText:

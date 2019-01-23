@@ -184,10 +184,10 @@ public class ViewerServiceImpl implements ViewerService {
 
     private List<Page> getPagesData(String documentGuid, String password) throws Exception {
         if (viewerConfiguration.isHtmlMode()) {
-            HtmlOptions htmlOptions = createCommonHtmlOptions(password);
+            HtmlOptions htmlOptions = createCommonHtmlOptions(password, viewerConfiguration.getWatermarkText());
             return viewerHandler.getPages(documentGuid, htmlOptions);
         } else {
-            ImageOptions imageOptions = createCommonImageOptions(password);
+            ImageOptions imageOptions = createCommonImageOptions(password, viewerConfiguration.getWatermarkText());
             return viewerHandler.getPages(documentGuid, imageOptions);
         }
     }
@@ -206,12 +206,12 @@ public class ViewerServiceImpl implements ViewerService {
             PageDescriptionEntity loadedPage = getPageDescriptionEntity(pageData);
             // set options
             if (viewerConfiguration.isHtmlMode()) {
-                HtmlOptions htmlOptions = createHtmlOptions(pageNumber, password);
+                HtmlOptions htmlOptions = createHtmlOptions(pageNumber, password, viewerConfiguration.getWatermarkText());
                 // get page HTML
                 PageHtml page = (PageHtml) viewerHandler.getPages(documentGuid, htmlOptions).get(0);
                 loadedPage.setData(page.getHtmlContent());
             } else {
-                ImageOptions imageOptions = createImageOptions(pageNumber, password);
+                ImageOptions imageOptions = createImageOptions(pageNumber, password, viewerConfiguration.getWatermarkText());
                 // get page image
                 PageImage page = (PageImage) viewerHandler.getPages(documentGuid, imageOptions).get(0);
                 loadedPage.setData(getStringFromStream(page.getStream()));
