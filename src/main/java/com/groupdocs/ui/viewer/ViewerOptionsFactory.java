@@ -23,7 +23,7 @@ public class ViewerOptionsFactory {
         }
         if (!StringUtils.isEmpty(watermark)) {
             Watermark wm = new Watermark(watermark);
-            wm.setColor(Color.BLUE);
+            wm.setColor(new Color(Color.BLUE.getRed(), Color.BLUE.getGreen(), Color.BLUE.getBlue(), 100));
             wm.setPosition(WatermarkPosition.Diagonal);
             wm.setWidth(100);
             options.setWatermark(wm);
