@@ -46,6 +46,9 @@ public class ViewerConfiguration extends CommonConfiguration {
     @Value("#{new Boolean('${viewer.saveRotateState}')}")
     private boolean saveRotateState = true;
 
+    @Value("${viewer.watermarkText}")
+    private String watermarkText;
+
     @PostConstruct
     public void init() {
         this.filesDirectory = StringUtils.isEmpty(this.filesDirectory) ? defaultViewerDirectory() : relativePathToAbsolute(this.filesDirectory);
@@ -139,6 +142,14 @@ public class ViewerConfiguration extends CommonConfiguration {
         this.saveRotateState = saveRotateState;
     }
 
+    public String getWatermarkText() {
+        return watermarkText;
+    }
+
+    public void setWatermarkText(String watermarkText) {
+        this.watermarkText = watermarkText;
+    }
+
     @Override
     public String toString() {
         return super.toString() +
@@ -154,6 +165,7 @@ public class ViewerConfiguration extends CommonConfiguration {
                 ", htmlMode=" + htmlMode +
                 ", cache=" + cache +
                 ", saveRotateState=" + saveRotateState +
+                ", watermarkText='" + watermarkText + '\'' +
                 '}';
     }
 }
