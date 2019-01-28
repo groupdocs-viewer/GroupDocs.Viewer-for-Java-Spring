@@ -29,6 +29,9 @@ public class CommonConfiguration {
     @Value("#{new Boolean('${common.rewrite}')}")
     private Boolean rewrite;
 
+    @Value("#{new Boolean('${common.enableRightClick}')}")
+    private Boolean enableRightClick;
+
     public boolean isPageSelector() {
         return pageSelector;
     }
@@ -77,6 +80,14 @@ public class CommonConfiguration {
         this.rewrite = rewrite;
     }
 
+    public Boolean getEnableRightClick() {
+        return enableRightClick;
+    }
+
+    public void setEnableRightClick(Boolean enableRightClick) {
+        this.enableRightClick = enableRightClick;
+    }
+
     @Override
     public String toString() {
         return "CommonConfiguration{" +
@@ -86,6 +97,7 @@ public class CommonConfiguration {
                 ", print=" + print +
                 ", browse=" + browse +
                 ", rewrite=" + rewrite +
+                ", enableRightClick=" + enableRightClick +
                 '}';
     }
 }
