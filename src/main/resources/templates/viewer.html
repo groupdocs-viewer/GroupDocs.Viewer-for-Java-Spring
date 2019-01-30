@@ -2,16 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>GroupDocs.Viewer for Java Spring</title>
-    <link type="text/css" rel="stylesheet" href="/assets/common/css/all.min.css">
-    <link type="text/css" rel="stylesheet" href="/assets/common/css/v4-shims.min.css">
-    <link type="text/css" rel="stylesheet" href="/assets/common/css/swiper.min.css">
-    <link type="text/css" rel="stylesheet" href="/assets/common/css/circle-progress.css"/>
-    <link type="text/css" rel="stylesheet" href="/assets/viewer/css/viewer.css"/>
-    <link type="text/css" rel="stylesheet" href="/assets/viewer/css/viewer.mobile.css"/>
-    <link type="text/css" rel="stylesheet" href="/assets/viewer/css/viewer-dark.css"/>
-    <script type="text/javascript" src="/assets/common/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/assets/common/js/swiper.min.js"></script>
-    <script type="text/javascript" src="/assets/viewer/js/viewer.js"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{'/assets/common/css/all.min.css'}">
+    <link type="text/css" rel="stylesheet" th:href="@{'/assets/common/css/v4-shims.min.css'}">
+    <link type="text/css" rel="stylesheet" th:href="@{'/assets/common/css/swiper.min.css'}">
+    <link type="text/css" rel="stylesheet" th:href="@{'/assets/common/css/circle-progress.css'}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{'/assets/viewer/css/viewer.css'}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{'/assets/viewer/css/viewer.mobile.css'}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{'/assets/viewer/css/viewer-dark.css'}"/>
+    <script type="text/javascript" th:src="@{'/assets/common/js/jquery.min.js'}"></script>
+    <script type="text/javascript" th:src="@{'/assets/common/js/swiper.min.js'}"></script>
+    <script type="text/javascript" th:src="@{'/assets/viewer/js/viewer.js'}"></script>
 </head>
 <body>
 <div id="element"></div>
@@ -19,7 +19,7 @@
     /*<![CDATA[*/
     $('#element').viewer({
         /*[+
-        applicationPath: 'http://' + [[${globalConfiguration.server.hostAddress}]] + ':' + [[${globalConfiguration.server.httpPort}]] + '/viewer',
+        applicationPath: 'http://' + [[${globalConfiguration.server.hostAddress}]] + ':' + [[${globalConfiguration.server.httpPort}]] + [[${globalConfiguration.server.applicationContextPath}]] + '/viewer',
         +]*/
         defaultDocument: /*[[${viewerConfiguration.defaultDocument}]]*/'',
         htmlMode: /*[[${viewerConfiguration.htmlMode}]]*/'',

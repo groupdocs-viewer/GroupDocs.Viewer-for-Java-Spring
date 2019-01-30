@@ -59,6 +59,17 @@ mvn clean spring-boot:run
 ## Open http://localhost:8080/viewer/ in your favorite browser.
 ```
 
+#### Build war from source
+
+Download [source code](https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/archive/master.zip) from github or clone this repository.
+
+```bash
+git clone https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring
+cd GroupDocs.Viewer-for-Java-Spring
+mvn package -P war
+## Deploy this war on any server
+```
+
 #### Binary release (with all dependencies)
 
 Download [latest release](https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/releases/latest) from [releases page](https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/releases). 

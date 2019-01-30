@@ -23,7 +23,7 @@ public class ApplicationStartup implements ApplicationListener<WebServerInitiali
      */
     public void onApplicationEvent(WebServerInitializedEvent event) {
         // use this event for obtaining the local port of a running server
-        serverConfiguration.setHttpPort(event.getSource().getPort());
+        serverConfiguration.setHttpPort(event.getWebServer().getPort());
     }
 
 } 
