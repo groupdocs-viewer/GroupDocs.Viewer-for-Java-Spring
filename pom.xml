@@ -28,6 +28,7 @@
             </activation>
             <properties>
                 <packaging.type>jar</packaging.type>
+                <scope>compile</scope>
             </properties>
         </profile>
         <!--mvn package -P war-->
@@ -35,6 +36,7 @@
             <id>war</id>
             <properties>
                 <packaging.type>war</packaging.type>
+                <scope>provided</scope>
             </properties>
         </profile>
     </profiles>
@@ -63,14 +65,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <version>2.0.4.RELEASE</version>
-            <scope>provided</scope>
+            <scope>${scope}</scope>
         </dependency>-->
         <!-- For using tomcat please comment or remove this jetty dependency -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jetty</artifactId>
             <version>2.0.4.RELEASE</version>
-            <scope>provided</scope>
+            <scope>${scope}</scope>
         </dependency>
         <!-- the end of jetty dependency -->
         <dependency>
