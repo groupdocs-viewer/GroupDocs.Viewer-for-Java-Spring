@@ -75,7 +75,7 @@ public class ViewerServiceImpl implements ViewerService {
                 filesDirectory = filesDirectory + File.separator;
             }
             config.setStoragePath(filesDirectory);
-            config.setUseCache(viewerConfiguration.isCache());
+            config.setEnableCaching(viewerConfiguration.isCache());
             config.getFontDirectories().add(viewerConfiguration.getFontsDirectory());
 
             if (viewerConfiguration.isHtmlMode()) {
