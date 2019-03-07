@@ -32,7 +32,7 @@ public class ViewerOptionsFactory {
 
     public static HtmlOptions createCommonHtmlOptions(String password, String watermark) {
         HtmlOptions htmlOptions = new HtmlOptions();
-        htmlOptions.setResourcesEmbedded(true);
+        htmlOptions.setEmbedResources(true);
         fillCommonFields(password, watermark, htmlOptions);
         return htmlOptions;
     }
