@@ -25,11 +25,13 @@ public class ApplicationConfiguration {
 
     @PostConstruct
     public void init() {
-        try {
-            hostAddress = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e) {
-            logger.error("Can not get host address ", e);
-            hostAddress = "localhost";
+        if (StringUtils.isEmpty(hostAddress)) {
+            try {
+                hostAddress = InetAddress.getLocalHost().getHostAddress();
+            } catch (UnknownHostException e) {
+                logger.error("Can not get host address ", e);
+                hostAddress = "localhost";
+            }
         }
         this.licensePath = StringUtils.isEmpty(this.licensePath) ? defaultLicenseDirectory() : relativePathToAbsolute(this.licensePath);
     }
