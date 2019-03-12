@@ -14,7 +14,9 @@ server:
 application:
   # License path
   # Absolute or relative path to GroupDocs license file
-  licensePath: 
+  licensePath:
+  # Host name or ip for server instance
+  hostAddress:
 
 ################################################
 # Common configurations
