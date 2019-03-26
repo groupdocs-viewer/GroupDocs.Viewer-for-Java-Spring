@@ -52,7 +52,7 @@ public class ViewerController {
      * Get viewer page
      *
      * @param request http request
-     * @param model model data for template
+     * @param model   model data for template
      * @return template name
      */
     @RequestMapping(method = RequestMethod.GET)
@@ -68,53 +68,92 @@ public class ViewerController {
 
     /**
      * Get files and directories
+     *
      * @return files and directories list
      */
     @RequestMapping(method = RequestMethod.POST, value = "/loadFileTree",
             consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<FileDescriptionEntity> loadFileTree(@RequestBody FileTreeRequest fileTreeRequest){
+    public List<FileDescriptionEntity> loadFileTree(@RequestBody FileTreeRequest fileTreeRequest) {
         return viewerService.getFileList(fileTreeRequest.getPath());
     }
 
     /**
      * Get document description
+     *
      * @return document description
      */
     @RequestMapping(method = RequestMethod.POST, value = "/loadDocumentDescription", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public LoadDocumentEntity loadDocumentDescription(@RequestBody LoadDocumentRequest loadDocumentRequest){
+    public LoadDocumentEntity loadDocumentDescription(@RequestBody LoadDocumentRequest loadDocumentRequest) {
         return viewerService.loadDocument(loadDocumentRequest, viewerService.getViewerConfiguration().getPreloadPageCount() == 0);
     }
 
     /**
      * Get all pages for thumbnails
+     *
      * @param loadDocumentRequest
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, value = "/loadThumbnails", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public LoadDocumentEntity loadThumbnails(@RequestBody LoadDocumentRequest loadDocumentRequest){
+    public LoadDocumentEntity loadThumbnails(@RequestBody LoadDocumentRequest loadDocumentRequest) {
         return viewerService.loadDocument(loadDocumentRequest, true);
     }
 
     /**
+     * Get document for printing
+     *
+     * @param loadDocumentRequest
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/loadPrint", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public LoadDocumentEntity loadPrint(@RequestBody LoadDocumentRequest loadDocumentRequest) {
+        return viewerService.loadDocument(loadDocumentRequest, true);
+    }
+
+    /**
+     * Get pdf document for printing
+     *
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/printPdf", consumes = APPLICATION_JSON_VALUE)
+    public void printPdf(@RequestBody LoadDocumentRequest loadDocumentRequest, HttpServletResponse response) {
+        String documentGuid = loadDocumentRequest.getGuid();
+        File file = new File(documentGuid);
+        // set response content info
+        Utils.addFileDownloadHeaders(response, file.getName(), file.length());
+        // download the document
+        try (InputStream inputStream = new BufferedInputStream(new FileInputStream(documentGuid));
+             ServletOutputStream outputStream = response.getOutputStream()) {
+
+            IOUtils.copyLarge(inputStream, outputStream);
+        } catch (Exception ex) {
+            logger.error("Exception in opening document", ex);
+            throw new TotalGroupDocsException(ex.getMessage(), ex);
+        }
+    }
+
+    /**
      * Get document page
+     *
      * @return document page info
      */
     @RequestMapping(method = RequestMethod.POST, value = "/loadDocumentPage", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public PageDescriptionEntity loadDocumentPage(@RequestBody LoadDocumentPageRequest loadDocumentPageRequest){
+    public PageDescriptionEntity loadDocumentPage(@RequestBody LoadDocumentPageRequest loadDocumentPageRequest) {
         return viewerService.loadDocumentPage(loadDocumentPageRequest);
     }
 
     /**
      * Rotate page(s)
+     *
      * @return rotated pages list (each object contains page number and rotated angle information)
      */
     @RequestMapping(method = RequestMethod.POST, value = "/rotateDocumentPages", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<RotatedPageEntity> rotateDocumentPages(@RequestBody RotateDocumentPagesRequest rotateDocumentPagesRequest){
+    public List<RotatedPageEntity> rotateDocumentPages(@RequestBody RotateDocumentPagesRequest rotateDocumentPagesRequest) {
         return viewerService.rotateDocumentPages(rotateDocumentPagesRequest);
     }
 
@@ -131,7 +170,7 @@ public class ViewerController {
              ServletOutputStream outputStream = response.getOutputStream()) {
 
             IOUtils.copyLarge(inputStream, outputStream);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             logger.error("Exception in downloading document", ex);
             throw new TotalGroupDocsException(ex.getMessage(), ex);
         }
@@ -139,6 +178,7 @@ public class ViewerController {
 
     /**
      * Upload document
+     *
      * @return uploaded document object (the object contains uploaded document guid)
      */
     @RequestMapping(method = RequestMethod.POST, value = "/uploadDocument",
