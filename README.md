@@ -1,6 +1,6 @@
 ![GroupDocs.Viewer](https://raw.githubusercontent.com/groupdocs-viewer/groupdocs-viewer.github.io/master/resources/image/banner.png "GroupDocs.Viewer")
 # GroupDocs.Viewer-for-Java-Spring Example
-###### version 1.14.12
+###### version 1.14.13
 
 [![Build Status](https://travis-ci.org/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring.svg?branch=master)](https://travis-ci.org/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring)
 [![Maintainability](https://api.codeclimate.com/v1/badges/e8ee774e4c4b2fad413a/maintainability)](https://codeclimate.com/github/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/maintainability)
@@ -77,10 +77,10 @@ Download [latest release](https://github.com/groupdocs-viewer/GroupDocs.Viewer-f
 **Note**: This method is **recommended** for running this sample behind firewall.
 
 ```bash
-curl -J -L -o release.tar.gz https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/releases/download/1.14.12/release.tar.gz
+curl -J -L -o release.tar.gz https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/releases/download/1.14.13/release.tar.gz
 tar -xvzf release.tar.gz
 cd release
-java -jar viewer-spring-1.14.12.jar configuration.yaml
+java -jar viewer-spring-1.14.13.jar configuration.yaml
 ## Open http://localhost:8080/viewer/ in your favorite browser.
 ```
 
