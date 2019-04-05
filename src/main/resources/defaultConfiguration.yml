@@ -84,3 +84,7 @@ viewer:
   saveRotateState: true
   # Enter text which will be used as a watermark
   watermarkText:
+  # Print secured documents mode
+  # Set false to ignore document print security
+  # Set true to check document print security
+  printAllowed: true

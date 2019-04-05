@@ -49,6 +49,9 @@ public class ViewerConfiguration extends CommonConfiguration {
     @Value("${viewer.watermarkText}")
     private String watermarkText;
 
+    @Value("#{new Boolean('${viewer.printAllowed}')}")
+    private Boolean printAllowed;
+
     @PostConstruct
     public void init() {
         this.filesDirectory = StringUtils.isEmpty(this.filesDirectory) ? defaultViewerDirectory() : relativePathToAbsolute(this.filesDirectory);
@@ -150,6 +153,14 @@ public class ViewerConfiguration extends CommonConfiguration {
         this.watermarkText = watermarkText;
     }
 
+    public Boolean getPrintAllowed() {
+        return printAllowed;
+    }
+
+    public void setPrintAllowed(Boolean printAllowed) {
+        this.printAllowed = printAllowed;
+    }
+
     @Override
     public String toString() {
         return super.toString() +
@@ -166,6 +177,7 @@ public class ViewerConfiguration extends CommonConfiguration {
                 ", cache=" + cache +
                 ", saveRotateState=" + saveRotateState +
                 ", watermarkText='" + watermarkText + '\'' +
+                ", printAllowed='" + printAllowed + '\'' +
                 '}';
     }
 }
