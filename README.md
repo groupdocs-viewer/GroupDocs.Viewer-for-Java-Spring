@@ -18,7 +18,7 @@ This tool enables you to **view MS Office files (Word, Excel, PowerPoint)** and 
 
 
 ## Demo Video
-[![Document viewer](https://img.youtube.com/vi/NnZaMNUC6o0/0.jpg)](https://www.youtube.com/watch?v=NnZaMNUC6o0)
+[![Document viewer](https://raw.githubusercontent.com/groupdocs-viewer/groupdocs-viewer.github.io/master/resources/image/document-viewer-demo.gif)](https://www.youtube.com/watch?v=NnZaMNUC6o0)
 
 
 ## Features
