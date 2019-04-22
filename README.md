@@ -11,7 +11,7 @@
 - Maven 3
 
 
-## Description
+## Document viewer online tool
 This tool enables you to **view MS Office files (Word, Excel, PowerPoint)** and over 50 document formats right in your web browser. It is based on powerful and flexible [GroupDocs.Viewer for Java](https://products.groupdocs.com/viewer/java) API that requires no external dependencies. You can adjust settings to **view documents as images or as HTML5**. 
 
 **Note** Without a license application will run in trial mode, purchase [GroupDocs.Viewer for Java license](https://purchase.groupdocs.com/order-online-step-1-of-8.aspx) or request [GroupDocs.Viewer for Java temporary license](https://purchase.groupdocs.com/temporary-license).
