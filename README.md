@@ -11,7 +11,7 @@
 - Maven 3
 
 
-## Document Viewer API for Java Dropwizard
+## Document Viewer API for Java Spring
 [GroupDocs.Viewer for Java](https://products.groupdocs.com/viewer/java) API allows you to view over 90 document formats including **DOCX**, **PDF**, **PPT**, **XLS**, among many others without any additional dependencies. Thanks to its flexible configuration it can be configured to **view documents as images or as HTML5**.
 
 
