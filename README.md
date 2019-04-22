@@ -11,15 +11,44 @@
 - Maven 3
 
 
-## Document viewer online tool
-This tool enables you to **view MS Office files (Word, Excel, PowerPoint)** and over 50 document formats right in your web browser. It is based on powerful and flexible [GroupDocs.Viewer for Java](https://products.groupdocs.com/viewer/java) API that requires no external dependencies. You can adjust settings to **view documents as images or as HTML5**. 
+## Document Viewer API for Java Dropwizard
+[GroupDocs.Viewer for Java](https://products.groupdocs.com/viewer/java) API allows you to view over 90 document formats including **DOCX**, **PDF**, **PPT**, **XLS**, among many others without any additional dependencies. Thanks to its flexible configuration it can be configured to **view documents as images or as HTML5**.
 
-**Note** Without a license application will run in trial mode, purchase [GroupDocs.Viewer for Java license](https://purchase.groupdocs.com/order-online-step-1-of-8.aspx) or request [GroupDocs.Viewer for Java temporary license](https://purchase.groupdocs.com/temporary-license).
 
+In order to demonstrate GroupDocs.Viewer for Java reach and powerful features we prepared a modern **document viewer** front-end web UI example. Which can be used as a standalone application or easily integrated into your project.
+
+**Note:** without a license application will run in trial mode, purchase [GroupDocs.Viewer for Java license](https://purchase.groupdocs.com/order-online-step-1-of-8.aspx) or request [GroupDocs.Viewer for Java temporary license](https://purchase.groupdocs.com/temporary-license).
+
+
+## Supported document Formats
+
+| Family                      | Formats                                                                                                                            |
+| --------------------------- |:---------------------------------------------------------------------------------------------------------------------------------- |
+| Portable Document Format    | `PDF`                                                                                                                              |
+| Microsoft Word              | `DOC`, `DOCM` , `DOCX`, `DOT`, `DOTM`, `DOTX`                                                                                      |
+| Microsoft Excel             | `XLS`, `XLSB`, `XLSM`, `XLSX`, `XLT`, `XLTM`, `XLTX`                                                                               |
+| Microsoft PowerPoint        | `PPT`, `POT`, `POTM`, `POTX`, `PPS`, `PPSM`, `PPSX`, `PPTM`, `PPTX`                                                                |
+| Microsoft Visio             | `VSD`, `VDW`, `VDX`, `VSDX`, `VSS`, `VST`, `VSX`, `VTX`                                                                            |
+| Microsoft Project           | `MPP`, `MPT`                                                                                                                       |
+| Microsoft Outlook           | `EML`, `EMLX`, `MSG`                                                                                                               |
+| OpenDocument Formats        | `ODT`, `ODP`, `ODS`, `OTT`                                                                                                         |
+| Plain Text File             | `TXT`                                                                                                                              |
+| Comma-Separated Values      | `CSV`                                                                                                                              |
+| HyperText Markup Language   | `HTML`, `MHT`, `MHTML`, `SVG`                                                                                                      |
+| Extensible Markup Language  | `XML`,`XML`, `XPS`                                                                                                                 |
+| AutoCAD Drawing File Format | `DGN`, `DWG`, `DXF`                                                                                                                |
+| Image files                 | `BMP`, `CAL`, `DCX`, `DIB`, `EMF`, `GIF`, `JP2`, `JPG`, `MIL`, `MIL`, `PCD`, `PCT`, `PCX`, `PNG`, `PSD`, `RAS`, `TGA`,`TIFF`,`WMF` |
+| Electronic publication      | `EPUB`                                                                                                                             |
+| Windows Icon                | `ICO`                                                                                                                              |
+| Medical image files         | `DCM`                                                                                                                              | 
 
 ## Demo Video
-[![Document viewer](https://raw.githubusercontent.com/groupdocs-viewer/groupdocs-viewer.github.io/master/resources/image/document-viewer-demo.gif)](https://www.youtube.com/watch?v=NnZaMNUC6o0)
 
+<p align="center">
+  <a title="Document viewer for JAVA " href="https://www.youtube.com/watch?v=NnZaMNUC6o0"> 
+    <img src="https://raw.githubusercontent.com/groupdocs-viewer/groupdocs-viewer.github.io/master/resources/image/document-viewer-demo.gif" width="100%" style="width:100%;">
+  </a>
+</p>
 
 ## Features
 - Responsive design
@@ -119,9 +148,11 @@ For all methods above you can adjust settings in `configuration.yml`. By default
 
 
 ## License
-The MIT License (MIT). Please have a look at the LICENSE.md for more details
+The MIT License (MIT). 
 
-## GroupDocs Document Viewer on other platforms
+Please have a look at the LICENSE.md for more details
+
+## GroupDocs Document Viewer on other platforms/frameworks
 
 - JAVA DropWizard [Document Viewer](https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Dropwizard) 
 - .NET MVC [Document viewer](https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-.NET-MVC)
