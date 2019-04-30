@@ -1,5 +1,5 @@
 ![GroupDocs.Viewer](https://raw.githubusercontent.com/groupdocs-viewer/groupdocs-viewer.github.io/master/resources/image/banner.png "GroupDocs.Viewer")
-# GroupDocs.Viewer-for-Java-Spring Example
+# GroupDocs.Viewer for Java Spring Example
 ###### version 1.14.15
 
 [![Build Status](https://travis-ci.org/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring.svg?branch=master)](https://travis-ci.org/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring)
