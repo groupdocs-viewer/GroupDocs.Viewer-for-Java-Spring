@@ -1,5 +1,6 @@
 package com.groupdocs.ui.viewer;
 
+import com.groupdocs.ui.config.DefaultDirectories;
 import com.groupdocs.ui.config.GlobalConfiguration;
 import com.groupdocs.ui.exception.TotalGroupDocsException;
 import com.groupdocs.ui.model.request.LoadDocumentPageRequest;
@@ -17,6 +18,7 @@ import com.groupdocs.viewer.domain.Page;
 import com.groupdocs.viewer.domain.PageData;
 import com.groupdocs.viewer.domain.containers.DocumentInfoContainer;
 import com.groupdocs.viewer.domain.containers.FileListContainer;
+import com.groupdocs.viewer.domain.containers.PdfDocumentInfoContainer;
 import com.groupdocs.viewer.domain.html.PageHtml;
 import com.groupdocs.viewer.domain.image.PageImage;
 import com.groupdocs.viewer.domain.options.DocumentInfoOptions;
@@ -27,6 +29,7 @@ import com.groupdocs.viewer.handler.ViewerHandler;
 import com.groupdocs.viewer.handler.ViewerHtmlHandler;
 import com.groupdocs.viewer.handler.ViewerImageHandler;
 import com.groupdocs.viewer.licensing.License;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +51,7 @@ import static com.groupdocs.ui.viewer.ViewerOptionsFactory.*;
 public class ViewerServiceImpl implements ViewerService {
 
     private static final Logger logger = LoggerFactory.getLogger(ViewerServiceImpl.class);
+    public static final String PDF = "pdf";
 
     @Autowired
     private GlobalConfiguration globalConfiguration;
@@ -151,35 +155,36 @@ public class ViewerServiceImpl implements ViewerService {
         String password = loadDocumentRequest.getPassword();
         try {
             // check if documentGuid contains path or only file name
-            File file = new File(documentGuid);
-            if (StringUtils.isEmpty(file.getAbsolutePath())) {
+            if (!DefaultDirectories.isAbsolutePath(documentGuid)) {
                 documentGuid = viewerConfiguration.getFilesDirectory() + File.separator + documentGuid;
-            } else {
-                documentGuid = file.getAbsolutePath();
             }
             // get document info options
-            DocumentInfoOptions documentInfoOptions = getDocumentInfoOptions(documentGuid, password);
+            DocumentInfoOptions documentInfoOptions = getDocumentInfoOptions(password);
             // get document info container
             DocumentInfoContainer documentInfoContainer = viewerHandler.getDocumentInfo(documentGuid, documentInfoOptions);
-            List<Page> pagesData = Collections.EMPTY_LIST;
 
-            if (loadAllPages) {
-                pagesData = getPagesData(documentGuid, password);
-            }
-
-            List<PageDescriptionEntity> pages = getPageDescriptionEntities(documentInfoContainer.getPages(), pagesData);
-
-            LoadDocumentEntity loadDocumentEntity = new LoadDocumentEntity();
-            loadDocumentEntity.setGuid(loadDocumentRequest.getGuid());
-            loadDocumentEntity.setPages(pages);
             // return document description
-            return loadDocumentEntity;
+            return getLoadDocumentEntity(documentGuid, password, documentInfoContainer, loadAllPages);
         } catch (GroupDocsViewerException ex) {
             throw new TotalGroupDocsException(getExceptionMessage(password, ex), ex);
         } catch (Exception ex) {
             logger.error("Exception in loading document", ex);
             throw new TotalGroupDocsException(ex.getMessage(), ex);
         }
+    }
+
+    private LoadDocumentEntity getLoadDocumentEntity(String documentGuid, String password, DocumentInfoContainer documentInfoContainer, boolean loadAllPages) throws Exception {
+        LoadDocumentEntity loadDocumentEntity = new LoadDocumentEntity();
+        loadDocumentEntity.setGuid(documentGuid);
+
+        List<Page> pagesData = loadAllPages ? getPagesData(documentGuid, password) : Collections.EMPTY_LIST;
+        List<PageDescriptionEntity> pages = getPageDescriptionEntities(documentInfoContainer.getPages(), pagesData);
+        loadDocumentEntity.setPages(pages);
+
+        if (viewerConfiguration.getPrintAllowed() && PDF.equals(FilenameUtils.getExtension(documentGuid)) && documentInfoContainer instanceof PdfDocumentInfoContainer) {
+            loadDocumentEntity.setPrintAllowed(((PdfDocumentInfoContainer) documentInfoContainer).getPrintingAllowed());
+        }
+        return loadDocumentEntity;
     }
 
     private List<Page> getPagesData(String documentGuid, String password) throws Exception {
@@ -201,7 +206,7 @@ public class ViewerServiceImpl implements ViewerService {
         Integer pageNumber = loadDocumentPageRequest.getPage();
         String password = loadDocumentPageRequest.getPassword();
         try {
-            DocumentInfoOptions documentInfoOptions = getDocumentInfoOptions(documentGuid, password);
+            DocumentInfoOptions documentInfoOptions = getDocumentInfoOptions(password);
             PageData pageData = viewerHandler.getDocumentInfo(documentGuid, documentInfoOptions).getPages().get(pageNumber - 1);
             PageDescriptionEntity loadedPage = getPageDescriptionEntity(pageData);
             // set options
@@ -236,7 +241,7 @@ public class ViewerServiceImpl implements ViewerService {
         Integer angle = rotateDocumentPagesRequest.getAngle();
         try {
             // get document info options
-            DocumentInfoOptions documentInfoOptions = getDocumentInfoOptions(documentGuid, password);
+            DocumentInfoOptions documentInfoOptions = getDocumentInfoOptions(password);
             // a list of the rotated pages info
             List<RotatedPageEntity> rotatedPages = new ArrayList<>();
             // rotate pages
@@ -262,8 +267,8 @@ public class ViewerServiceImpl implements ViewerService {
         }
     }
 
-    private DocumentInfoOptions getDocumentInfoOptions(String documentGuid, String password) {
-        DocumentInfoOptions documentInfoOptions = new DocumentInfoOptions(documentGuid);
+    private DocumentInfoOptions getDocumentInfoOptions(String password) {
+        DocumentInfoOptions documentInfoOptions = new DocumentInfoOptions();
         // set password for protected document
         if (!StringUtils.isEmpty(password)) {
             documentInfoOptions.setPassword(password);

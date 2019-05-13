@@ -12,6 +12,11 @@ public class LoadDocumentEntity {
      */
     private List<PageDescriptionEntity> pages;
 
+    /**
+     * Restriction for printing pdf files in viewer
+     */
+    private Boolean printAllowed = true;
+
     public String getGuid() {
         return guid;
     }
@@ -26,5 +31,13 @@ public class LoadDocumentEntity {
 
     public void setPages(List<PageDescriptionEntity> pages) {
         this.pages = pages;
+    }
+
+    public Boolean getPrintAllowed() {
+        return printAllowed;
+    }
+
+    public void setPrintAllowed(Boolean printAllowed) {
+        this.printAllowed = printAllowed;
     }
 }
