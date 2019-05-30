@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring#readme",
   "dependencies": {
-    "@groupdocs.total-angular/viewer": "^0.0.8"
+    "@groupdocs.examples.angular/viewer": "^0.1.0"
   },
   "devDependencies": {
     "gulp": "^4.0.0"
