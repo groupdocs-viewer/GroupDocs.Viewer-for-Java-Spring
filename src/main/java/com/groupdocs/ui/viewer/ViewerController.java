@@ -78,6 +78,12 @@ public class ViewerController {
         return viewerService.getFileList(fileTreeRequest.getPath());
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/loadConfig", produces = APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ViewerConfiguration loadConfig() {
+        return viewerService.getViewerConfiguration();
+    }
+
     /**
      * Get document description
      *

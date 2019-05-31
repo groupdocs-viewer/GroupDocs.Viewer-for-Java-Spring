@@ -19,7 +19,7 @@ public class GroupDocsExceptionHandler extends ResponseEntityExceptionHandler {
         String message = exception.getMessage();
         exceptionEntity.setMessage(message);
         if (PASSWORD_REQUIRED.equals(message) || INCORRECT_PASSWORD.equals(message)) {
-            return new ResponseEntity<>(exceptionEntity, HttpStatus.OK);
+            return new ResponseEntity<>(exceptionEntity, HttpStatus.FORBIDDEN);
         }
         if (logger.isDebugEnabled()) {
             exception.printStackTrace();

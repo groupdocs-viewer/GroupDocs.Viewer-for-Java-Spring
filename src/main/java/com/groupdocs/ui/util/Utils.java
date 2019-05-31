@@ -72,9 +72,9 @@ public class Utils {
     public static String getExceptionMessage(String password, GroupDocsViewerException ex) {
         // Set exception message
         String message = ex.getMessage();
-        if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && password.isEmpty()) {
+        if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && StringUtils.isEmpty(password)) {
             message = PASSWORD_REQUIRED;
-        } else if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && !password.isEmpty()) {
+        } else if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && !StringUtils.isEmpty(password)) {
             message = INCORRECT_PASSWORD;
         } else {
             logger.error(message, ex);

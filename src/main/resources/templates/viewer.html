@@ -1,42 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>GroupDocs.Viewer for Java Spring</title>
-    <link type="text/css" rel="stylesheet" th:href="@{'/assets/common/css/all.min.css'}">
-    <link type="text/css" rel="stylesheet" th:href="@{'/assets/common/css/v4-shims.min.css'}">
-    <link type="text/css" rel="stylesheet" th:href="@{'/assets/common/css/swiper.min.css'}">
-    <link type="text/css" rel="stylesheet" th:href="@{'/assets/common/css/circle-progress.css'}"/>
-    <link type="text/css" rel="stylesheet" th:href="@{'/assets/viewer/css/viewer.css'}"/>
-    <link type="text/css" rel="stylesheet" th:href="@{'/assets/viewer/css/viewer.mobile.css'}"/>
-    <link type="text/css" rel="stylesheet" th:href="@{'/assets/viewer/css/viewer-dark.css'}"/>
-    <script type="text/javascript" th:src="@{'/assets/common/js/jquery.min.js'}"></script>
-    <script type="text/javascript" th:src="@{'/assets/common/js/swiper.min.js'}"></script>
-    <script type="text/javascript" th:src="@{'/assets/viewer/js/viewer.js'}"></script>
+    <meta charset="utf-8" />
+    <title>Viewer</title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="angular/viewer/dist/assets/css/all.min.css" />
 </head>
 <body>
-<div id="element"></div>
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    $('#element').viewer({
-        /*[+
-        applicationPath: 'http://' + [[${globalConfiguration.application.hostAddress}]] + ':' + [[${globalConfiguration.server.httpPort}]] + [[${globalConfiguration.server.applicationContextPath}]] + '/viewer',
-        +]*/
-        defaultDocument: /*[[${viewerConfiguration.defaultDocument}]]*/'',
-        htmlMode: /*[[${viewerConfiguration.htmlMode}]]*/'',
-        preloadPageCount: /*[[${viewerConfiguration.preloadPageCount}]]*/'',
-        zoom : /*[[${viewerConfiguration.zoom}]]*/'',
-        pageSelector: /*[[${viewerConfiguration.pageSelector}]]*/'',
-        search: /*[[${viewerConfiguration.search}]]*/'',
-        thumbnails: /*[[${viewerConfiguration.thumbnails}]]*/'',
-        rotate: /*[[${viewerConfiguration.rotate}]]*/'',
-        download: /*[[${viewerConfiguration.download}]]*/'',
-        upload: /*[[${viewerConfiguration.upload}]]*/'',
-        print: /*[[${viewerConfiguration.print}]]*/'',
-        browse: /*[[${viewerConfiguration.browse}]]*/'',
-        rewrite: /*[[${viewerConfiguration.rewrite}]]*/'',
-        enableRightClick: /*[[${viewerConfiguration.enableRightClick}]]*/'',
-    });
-    /*]]>*/
-</script>
-</body>
+<gd-viewer-angular-root></gd-viewer-angular-root>
+<script type="text/javascript" src="angular/viewer/dist/runtime.js"></script><script type="text/javascript" src="angular/viewer/dist/es2015-polyfills.js" nomodule></script><script type="text/javascript" src="angular/viewer/dist/polyfills.js"></script><script type="text/javascript" src="angular/viewer/dist/styles.js"></script><script type="text/javascript" src="angular/viewer/dist/scripts.js"></script></script><script type="text/javascript" src="angular/viewer/dist/main.js"></script></body>
 </html>
