@@ -73,14 +73,7 @@ public class ViewerServiceImpl implements ViewerService {
     private void configure() {
         try {
             // create viewer application configuration
-            ViewerConfig config = new ViewerConfig();
-            String filesDirectory = viewerConfiguration.getFilesDirectory();
-            if (!StringUtils.isEmpty(filesDirectory) && !filesDirectory.endsWith(File.separator)) {
-                filesDirectory = filesDirectory + File.separator;
-            }
-            config.setStoragePath(filesDirectory);
-            config.setEnableCaching(viewerConfiguration.isCache());
-            config.getFontDirectories().add(viewerConfiguration.getFontsDirectory());
+            ViewerConfig config = getViewerConfig();
 
             if (viewerConfiguration.isHtmlMode()) {
                 // initialize total instance for the HTML mode
@@ -92,6 +85,20 @@ public class ViewerServiceImpl implements ViewerService {
         } catch (Throwable throwable) {
             logger.error("Viewer wasn't initiate properly!");
         }
+    }
+
+    private ViewerConfig getViewerConfig() {
+        ViewerConfig config = new ViewerConfig();
+        String filesDirectory = viewerConfiguration.getFilesDirectory();
+        if (!StringUtils.isEmpty(filesDirectory) && !filesDirectory.endsWith(File.separator)) {
+            filesDirectory = filesDirectory + File.separator;
+        }
+        config.setStoragePath(filesDirectory);
+        config.setEnableCaching(viewerConfiguration.isCache());
+        if (!StringUtils.isEmpty(viewerConfiguration.getFontsDirectory())) {
+            config.getFontDirectories().add(viewerConfiguration.getFontsDirectory());
+        }
+        return config;
     }
 
     private void setLicense() {
