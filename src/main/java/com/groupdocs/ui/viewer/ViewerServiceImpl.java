@@ -73,14 +73,7 @@ public class ViewerServiceImpl implements ViewerService {
     private void configure() {
         try {
             // create viewer application configuration
-            ViewerConfig config = new ViewerConfig();
-            String filesDirectory = viewerConfiguration.getFilesDirectory();
-            if (!StringUtils.isEmpty(filesDirectory) && !filesDirectory.endsWith(File.separator)) {
-                filesDirectory = filesDirectory + File.separator;
-            }
-            config.setStoragePath(filesDirectory);
-            config.setEnableCaching(viewerConfiguration.isCache());
-            config.getFontDirectories().add(viewerConfiguration.getFontsDirectory());
+            ViewerConfig config = getViewerConfig();
 
             if (viewerConfiguration.isHtmlMode()) {
                 // initialize total instance for the HTML mode
@@ -92,6 +85,20 @@ public class ViewerServiceImpl implements ViewerService {
         } catch (Throwable throwable) {
             logger.error("Viewer wasn't initiate properly!");
         }
+    }
+
+    private ViewerConfig getViewerConfig() {
+        ViewerConfig config = new ViewerConfig();
+        String filesDirectory = viewerConfiguration.getFilesDirectory();
+        if (!StringUtils.isEmpty(filesDirectory) && !filesDirectory.endsWith(File.separator)) {
+            filesDirectory = filesDirectory + File.separator;
+        }
+        config.setStoragePath(filesDirectory);
+        config.setEnableCaching(viewerConfiguration.isCache());
+        if (!StringUtils.isEmpty(viewerConfiguration.getFontsDirectory())) {
+            config.getFontDirectories().add(viewerConfiguration.getFontsDirectory());
+        }
+        return config;
     }
 
     private void setLicense() {
@@ -119,24 +126,20 @@ public class ViewerServiceImpl implements ViewerService {
             List<FileDescriptionEntity> fileList = new ArrayList<>();
             // parse files/folders list
             for (FileDescription fd : fileListContainer.getFiles()) {
-                FileDescriptionEntity fileDescription = new FileDescriptionEntity();
-                fileDescription.setGuid(fd.getGuid());
-                // check if current file/folder is temp directory or is hidden
-                if (tempDirectoryName.equals(fd.getName()) || new File(fileDescription.getGuid()).isHidden()) {
-                    // ignore current file and skip to next one
-                    continue;
-                } else {
-                    // set file/folder name
+                if (!tempDirectoryName.equals(fd.getName()) && !new File(fd.getGuid()).isHidden()) {
+                    FileDescriptionEntity fileDescription = new FileDescriptionEntity();
+                    fileDescription.setGuid(fd.getGuid());
+                    // check if current file/folder is temp directory or is hidden
                     fileDescription.setName(fd.getName());
+                    // set file type
+                    fileDescription.setDocType(fd.getDocumentType());
+                    // set is directory true/false
+                    fileDescription.setDirectory(fd.isDirectory());
+                    // set file size
+                    fileDescription.setSize(fd.getSize());
+                    // add object to array list
+                    fileList.add(fileDescription);
                 }
-                // set file type
-                fileDescription.setDocType(fd.getDocumentType());
-                // set is directory true/false
-                fileDescription.setDirectory(fd.isDirectory());
-                // set file size
-                fileDescription.setSize(fd.getSize());
-                // add object to array list
-                fileList.add(fileDescription);
             }
             return fileList;
         } catch (Exception ex) {
@@ -300,8 +303,7 @@ public class ViewerServiceImpl implements ViewerService {
     }
 
     private String getPageData(Page pageData) throws IOException {
-        boolean htmlMode = viewerConfiguration.isHtmlMode();
-        if (htmlMode) {
+        if (viewerConfiguration.isHtmlMode()) {
             return ((PageHtml) pageData).getHtmlContent();
         } else {
             return getStringFromStream(((PageImage) pageData).getStream());
