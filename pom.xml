@@ -197,12 +197,21 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>gulp build</id>
+                        <id>install client</id>
                         <goals>
-                            <goal>gulp</goal>
+                            <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>build</arguments>
+                            <arguments>--prefix client install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>build client</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run --prefix client build</arguments>
                         </configuration>
                     </execution>
                 </executions>
