@@ -16,3 +16,45 @@ package-lock.json
 Licenses/*
 !Licenses/.gitkeep
 DocumentSamples/*
+src/test/resources/*
+!src/test/resources/calibre.docx
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+client/dist
+client/tmp
+client/out-tsc
+
+# dependencies
+client/node_modules
+
+# IDEs and editors
+client/.idea
+.project
+.classpath
+.c9/
+*.launch
+client/.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+client/.sass-cache
+client/connect.lock
+client/coverage
+client/libpeerconnection.log
+client/npm-debug.log
+client/yarn-error.log
+client/testem.log
+client/typings
+
+# System Files
+.DS_Store
+Thumbs.db
