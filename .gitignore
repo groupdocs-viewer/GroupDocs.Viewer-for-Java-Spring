@@ -16,6 +16,7 @@ package-lock.json
 Licenses/*
 !Licenses/.gitkeep
 DocumentSamples/*
+!DocumentSamples/.gitkeep
 src/test/resources/*
 !src/test/resources/calibre.docx
 
