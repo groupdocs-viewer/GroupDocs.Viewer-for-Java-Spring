@@ -1,8 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
-::ng-deep body {
-  font-size: initial !important;
-  font-family: 'Open Sans', sans-serif;
+@import (css) url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+:host * {
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
+.current-page-number {
+  margin: 0px 15px;
+  font-size: 14px;
+  color: #959da5;
+}
+
 .wrapper {
   align-items: stretch;
   height: 100%;
@@ -19,8 +24,23 @@
   height: inherit;
 }
 
+.thumbnails-button {
+  position: absolute;
+  right: 3px;
+}
+
 .gd-document {
   width: 100%;
   height: 100%;
 }
 
+.top-panel {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.toolbar-panel {
+  background-color: #3e4e5a;
+  width: 100%;
+}

@@ -1,23 +1,59 @@
-  <div class="wrapper" (contextmenu)="onRightClick($event)">
-    <div class="doc-panel" *ngIf="file">
-      <gd-thumbnails *ngIf="file"
-                     [pages]="file.pages"
-                     [isHtmlMode]="htmlModeConfig"
-                     [guid]="file.guid"
-                     [mode]="htmlModeConfig"></gd-thumbnails>
+<div class="wrapper" (contextmenu)="onRightClick($event)">
+  <div class="top-panel">
+    <gd-logo [logo]="'viewer'" icon="eye"></gd-logo>
+    <gd-top-toolbar class="toolbar-panel">
+      <gd-button [icon]="'folder-open'" [tooltip]="'Browse files'" (click)="openModal(browseFilesModal)"
+                 *ngIf="browseConfig" ></gd-button>
 
-      <gd-document *ngIf="file"
-                   class="gd-document"
-                   [file]="file"
-                   [mode]="htmlModeConfig"
-                   [preloadPageCount]="viewerConfig?.preloadPageCount"
-                   gdRenderPrint
-                   [htmlMode]="htmlModeConfig">
-      </gd-document>
-    </div>
+      <gd-select [disabled]="formatDisabled" [options]="options" (selected)="selectZoom($event)"
+                 [showSelected]="{ name: zoom+'%', value : zoom}" *ngIf="zoomConfig" ></gd-select>
+      <gd-button [disabled]="formatDisabled" [icon]="'search-plus'" [tooltip]="'Zoom In'" (click)="zoomIn()"
+                 *ngIf="zoomConfig" ></gd-button>
+      <gd-button [disabled]="formatDisabled" [icon]="'search-minus'" [tooltip]="'Zoom Out'"
+                 (click)="zoomOut()" *ngIf="zoomConfig" ></gd-button>
 
-    <gd-init-state *ngIf="!loading && !file" [icon]="'eye'" [text]="'Add url parameter for example: http://localhost:8080/viewer/?url=https://calibre-ebook.com/downloads/demos/demo.docx'" ></gd-init-state>
-    <gd-loading-mask *ngIf="!file" [loadingMask]="loading"></gd-loading-mask>
-    <gd-error-modal></gd-error-modal>
-    <gd-password-required></gd-password-required>
+      <gd-button [disabled]="formatDisabled" [icon]="'angle-double-left'" [tooltip]="'First Page'"
+                 (click)="toFirstPage()" *ngIf="pageSelectorConfig" ></gd-button>
+      <gd-button [disabled]="formatDisabled" [icon]="'angle-left'" [tooltip]="'Previous Page'"
+                 (click)="prevPage()" *ngIf="pageSelectorConfig" ></gd-button>
+      <div class="current-page-number">{{currentPage}}/{{countPages}}</div>
+      <gd-button [disabled]="formatDisabled" [icon]="'angle-right'" [tooltip]="'Next Page'"
+                 (click)="nextPage()" *ngIf="pageSelectorConfig" ></gd-button>
+      <gd-button [disabled]="formatDisabled" [icon]="'angle-double-right'" [tooltip]="'Last Page'"
+                 (click)="toLastPage()" *ngIf="pageSelectorConfig" ></gd-button>
+
+      <gd-button [disabled]="formatDisabled" [icon]="'undo'" [tooltip]="'Rotate CCW'" (click)="rotate(-90)"
+                 *ngIf="rotateConfig" ></gd-button>
+      <gd-button [disabled]="formatDisabled" [icon]="'redo'" [tooltip]="'Rotate CW'" (click)="rotate(90)"
+                 *ngIf="rotateConfig" ></gd-button>
+
+      <gd-button [disabled]="formatDisabled" [icon]="'download'" [tooltip]="'Download'"
+                 (click)="downloadFile()" *ngIf="downloadConfig" ></gd-button>
+      <gd-button [disabled]="formatDisabled" [icon]="'print'" [tooltip]="'Print'" (click)="printFile()"
+                 *ngIf="printConfig" ></gd-button>
+
+      <gd-button [disabled]="formatDisabled" [icon]="'search'" [tooltip]="'Search'" (click)="openSearch()"
+                 *ngIf="searchConfig" ></gd-button>
+      <gd-search (hidePanel)="showSearch = !$event" *ngIf="showSearch" ></gd-search>
+
+      <gd-button class="thumbnails-button" [disabled]="formatDisabled" [icon]="'th-large'" [tooltip]="'Thumbnails'"
+                 (click)="openThumbnails()" *ngIf="thumbnailsConfig && isDesktop"></gd-button>
+    </gd-top-toolbar>
   </div>
+  <div class="doc-panel" *ngIf="file">
+    <gd-thumbnails *ngIf="showThumbnails" [pages]="file.pages" [isHtmlMode]="htmlModeConfig"
+                   [guid]="file.guid" [mode]="htmlModeConfig"></gd-thumbnails>
+
+    <gd-document class="gd-document" *ngIf="file" [file]="file" [mode]="htmlModeConfig"
+                 [preloadPageCount]="viewerConfig?.preloadPageCount" gdRenderPrint [htmlMode]="htmlModeConfig"></gd-document>
+  </div>
+
+  <gd-init-state [icon]="'eye'" [text]="'test'" *ngIf="!file"></gd-init-state>
+
+  <gd-browse-files-modal (urlForUpload)="upload($event)" [files]="files" (selectedDirectory)="selectDir($event)"
+                         (selectedFileGuid)="selectFile($event, null, browseFilesModal)"
+                         [uploadConfig]="uploadConfig"></gd-browse-files-modal>
+
+  <gd-error-modal></gd-error-modal>
+  <gd-password-required></gd-password-required>
+</div>
