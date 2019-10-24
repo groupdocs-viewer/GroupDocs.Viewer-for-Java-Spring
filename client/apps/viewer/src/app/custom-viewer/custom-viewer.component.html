@@ -1,3 +1,4 @@
+<gd-loading-mask [loadingMask]="isLoading"></gd-loading-mask>
 <div class="wrapper" (contextmenu)="onRightClick($event)">
   <div class="top-panel">
     <gd-logo [logo]="'viewer'" icon="eye"></gd-logo>
@@ -5,26 +6,26 @@
       <gd-button [icon]="'folder-open'" [tooltip]="'Browse files'" (click)="openModal(browseFilesModal)"
                  *ngIf="browseConfig" ></gd-button>
 
-      <gd-select [disabled]="formatDisabled" [options]="options" (selected)="selectZoom($event)"
+      <gd-select class="mobile-hide" [disabled]="formatDisabled" [options]="options" (selected)="selectZoom($event)"
                  [showSelected]="{ name: zoom+'%', value : zoom}" *ngIf="zoomConfig" ></gd-select>
-      <gd-button [disabled]="formatDisabled" [icon]="'search-plus'" [tooltip]="'Zoom In'" (click)="zoomIn()"
+      <gd-button class="mobile-hide" [disabled]="formatDisabled" [icon]="'search-plus'" [tooltip]="'Zoom In'" (click)="zoomIn()"
                  *ngIf="zoomConfig" ></gd-button>
-      <gd-button [disabled]="formatDisabled" [icon]="'search-minus'" [tooltip]="'Zoom Out'"
+      <gd-button class="mobile-hide" [disabled]="formatDisabled" [icon]="'search-minus'" [tooltip]="'Zoom Out'"
                  (click)="zoomOut()" *ngIf="zoomConfig" ></gd-button>
 
-      <gd-button [disabled]="formatDisabled" [icon]="'angle-double-left'" [tooltip]="'First Page'"
+      <gd-button class="mobile-hide" [disabled]="formatDisabled" [icon]="'angle-double-left'" [tooltip]="'First Page'"
                  (click)="toFirstPage()" *ngIf="pageSelectorConfig" ></gd-button>
-      <gd-button [disabled]="formatDisabled" [icon]="'angle-left'" [tooltip]="'Previous Page'"
+      <gd-button class="mobile-hide" [disabled]="formatDisabled" [icon]="'angle-left'" [tooltip]="'Previous Page'"
                  (click)="prevPage()" *ngIf="pageSelectorConfig" ></gd-button>
-      <div class="current-page-number">{{currentPage}}/{{countPages}}</div>
-      <gd-button [disabled]="formatDisabled" [icon]="'angle-right'" [tooltip]="'Next Page'"
+      <div class="current-page-number" [ngClass]="{'active': !formatDisabled}">{{currentPage}}/{{countPages}}</div>
+      <gd-button class="mobile-hide" [disabled]="formatDisabled" [icon]="'angle-right'" [tooltip]="'Next Page'"
                  (click)="nextPage()" *ngIf="pageSelectorConfig" ></gd-button>
-      <gd-button [disabled]="formatDisabled" [icon]="'angle-double-right'" [tooltip]="'Last Page'"
+      <gd-button class="mobile-hide" [disabled]="formatDisabled" [icon]="'angle-double-right'" [tooltip]="'Last Page'"
                  (click)="toLastPage()" *ngIf="pageSelectorConfig" ></gd-button>
 
-      <gd-button [disabled]="formatDisabled" [icon]="'undo'" [tooltip]="'Rotate CCW'" (click)="rotate(-90)"
+      <gd-button class="mobile-hide" [disabled]="formatDisabled" [icon]="'undo'" [tooltip]="'Rotate CCW'" (click)="rotate(-90)"
                  *ngIf="rotateConfig" ></gd-button>
-      <gd-button [disabled]="formatDisabled" [icon]="'redo'" [tooltip]="'Rotate CW'" (click)="rotate(90)"
+      <gd-button class="mobile-hide" [disabled]="formatDisabled" [icon]="'redo'" [tooltip]="'Rotate CW'" (click)="rotate(90)"
                  *ngIf="rotateConfig" ></gd-button>
 
       <gd-button [disabled]="formatDisabled" [icon]="'download'" [tooltip]="'Download'"
@@ -40,15 +41,18 @@
                  (click)="openThumbnails()" *ngIf="thumbnailsConfig && isDesktop"></gd-button>
     </gd-top-toolbar>
   </div>
-  <div class="doc-panel" *ngIf="file">
+  <div class="doc-panel" *ngIf="file" #docPanel>
     <gd-thumbnails *ngIf="showThumbnails" [pages]="file.pages" [isHtmlMode]="htmlModeConfig"
                    [guid]="file.guid" [mode]="htmlModeConfig"></gd-thumbnails>
 
-    <gd-document class="gd-document" *ngIf="file" [file]="file" [mode]="htmlModeConfig"
+    <gd-document class="gd-document" *ngIf="file" [file]="file" [mode]="htmlModeConfig" gdScrollable
                  [preloadPageCount]="viewerConfig?.preloadPageCount" gdRenderPrint [htmlMode]="htmlModeConfig"></gd-document>
   </div>
 
-  <gd-init-state [icon]="'eye'" [text]="'test'" *ngIf="!file"></gd-init-state>
+  <gd-init-state [icon]="'eye'" [text]="'Drop file here to upload'" *ngIf="!file" (fileDropped)="fileDropped($event)">
+    Click <fa-icon [icon]="['fas','folder-open']"></fa-icon> to open file<br>
+    Or drop file here
+  </gd-init-state>
 
   <gd-browse-files-modal (urlForUpload)="upload($event)" [files]="files" (selectedDirectory)="selectDir($event)"
                          (selectedFileGuid)="selectFile($event, null, browseFilesModal)"
