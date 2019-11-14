@@ -76,13 +76,8 @@ public class ViewerServiceImpl implements ViewerService {
             // create viewer application configuration
             ViewerConfig config = getViewerConfig();
 
-            if (viewerConfiguration.isHtmlMode()) {
-                // initialize total instance for the HTML mode
-                viewerHandler = new ViewerHtmlHandler(config);
-            } else {
-                // initialize total instance for the Image mode
-                viewerHandler = new ViewerImageHandler(config);
-            }
+            // initialize total instance for the HTML mode or the Image mode
+            viewerHandler = viewerConfiguration.isHtmlMode() ? new ViewerHtmlHandler(config) : new ViewerImageHandler(config);
         } catch (Throwable throwable) {
             logger.error("Viewer wasn't initiate properly!");
         }
