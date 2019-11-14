@@ -24,7 +24,8 @@ import com.groupdocs.viewer.domain.image.PageImage;
 import com.groupdocs.viewer.domain.options.DocumentInfoOptions;
 import com.groupdocs.viewer.domain.options.FileListOptions;
 import com.groupdocs.viewer.domain.options.RotatePageOptions;
-import com.groupdocs.viewer.exception.GroupDocsViewerException;
+import com.groupdocs.viewer.exception.InvalidPasswordException;
+import com.groupdocs.viewer.exception.PasswordProtectedFileException;
 import com.groupdocs.viewer.handler.ViewerHandler;
 import com.groupdocs.viewer.handler.ViewerHtmlHandler;
 import com.groupdocs.viewer.handler.ViewerImageHandler;
@@ -75,13 +76,8 @@ public class ViewerServiceImpl implements ViewerService {
             // create viewer application configuration
             ViewerConfig config = getViewerConfig();
 
-            if (viewerConfiguration.isHtmlMode()) {
-                // initialize total instance for the HTML mode
-                viewerHandler = new ViewerHtmlHandler(config);
-            } else {
-                // initialize total instance for the Image mode
-                viewerHandler = new ViewerImageHandler(config);
-            }
+            // initialize total instance for the HTML mode or the Image mode
+            viewerHandler = viewerConfiguration.isHtmlMode() ? new ViewerHtmlHandler(config) : new ViewerImageHandler(config);
         } catch (Throwable throwable) {
             logger.error("Viewer wasn't initiate properly!");
         }
@@ -168,8 +164,9 @@ public class ViewerServiceImpl implements ViewerService {
 
             // return document description
             return getLoadDocumentEntity(documentGuid, password, documentInfoContainer, loadAllPages);
-        } catch (GroupDocsViewerException ex) {
-            throw new TotalGroupDocsException(getExceptionMessage(password, ex), ex);
+        } catch (InvalidPasswordException
+                | PasswordProtectedFileException ex) {
+            throw new TotalGroupDocsException(getExceptionMessage(password), ex);
         } catch (Exception ex) {
             logger.error("Exception in loading document", ex);
             throw new TotalGroupDocsException(ex.getMessage(), ex);
