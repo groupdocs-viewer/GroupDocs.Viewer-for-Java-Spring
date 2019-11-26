@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <title>Viewer</title>
@@ -9,15 +9,15 @@
 </head>
 <body>
 <client-root></client-root>
-<script src="angular/viewer/runtime-es2015.js" type="module"></script>
-<script src="angular/viewer/polyfills-es2015.js" type="module"></script>
-<script src="angular/viewer/runtime-es5.js" nomodule></script>
-<script src="angular/viewer/polyfills-es5.js" nomodule></script>
-<script src="angular/viewer/styles-es2015.js" type="module"></script>
-<script src="angular/viewer/styles-es5.js" nomodule></script>
-<script src="angular/viewer/vendor-es2015.js" type="module"></script>
-<script src="angular/viewer/main-es2015.js" type="module"></script>
-<script src="angular/viewer/vendor-es5.js" nomodule></script>
-<script src="angular/viewer/main-es5.js" nomodule></script>
+<script th:src="@{'/angular/viewer/runtime-es2015.js'}" type="module"></script>
+<script th:src="@{'/angular/viewer/polyfills-es2015.js'}" type="module"></script>
+<script th:src="@{'/angular/viewer/runtime-es5.js'}" nomodule></script>
+<script th:src="@{'/angular/viewer/polyfills-es5.js'}" nomodule></script>
+<script th:src="@{'/angular/viewer/styles-es2015.js'}" type="module"></script>
+<script th:src="@{'/angular/viewer/styles-es5.js'}" nomodule></script>
+<script th:src="@{'/angular/viewer/vendor-es2015.js'}" type="module"></script>
+<script th:src="@{'/angular/viewer/main-es2015.js'}" type="module"></script>
+<script th:src="@{'/angular/viewer/vendor-es5.js'}" nomodule></script>
+<script th:src="@{'/angular/viewer/main-es5.js'}" nomodule></script>
 </body>
 </html>
