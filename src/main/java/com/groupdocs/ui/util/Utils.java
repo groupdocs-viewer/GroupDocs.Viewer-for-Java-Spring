@@ -66,20 +66,10 @@ public class Utils {
      * Get correct message for security exceptions
      *
      * @param password
-     * @param ex
      * @return
      */
-    public static String getExceptionMessage(String password, GroupDocsViewerException ex) {
-        // Set exception message
-        String message = ex.getMessage();
-        if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && StringUtils.isEmpty(password)) {
-            message = PASSWORD_REQUIRED;
-        } else if (GroupDocsViewerException.class.isAssignableFrom(InvalidPasswordException.class) && !StringUtils.isEmpty(password)) {
-            message = INCORRECT_PASSWORD;
-        } else {
-            logger.error(message, ex);
-        }
-        return message;
+    public static String getExceptionMessage(String password) {
+        return StringUtils.isEmpty(password) ? PASSWORD_REQUIRED : INCORRECT_PASSWORD;
     }
 
     /**
