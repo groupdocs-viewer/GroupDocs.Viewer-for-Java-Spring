@@ -128,7 +128,7 @@ public class ViewerServiceImpl implements ViewerService {
                     // check if current file/folder is temp directory or is hidden
                     fileDescription.setName(fd.getName());
                     // set file type
-                    fileDescription.setDocType(fd.getDocumentType());
+                    fileDescription.setDocType(fd.getFileFormat());
                     // set is directory true/false
                     fileDescription.setDirectory(fd.isDirectory());
                     // set file size
