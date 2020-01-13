@@ -29,6 +29,7 @@ public class ViewerOptionsFactory {
             options.setWatermark(wm);
         }
         options.getCellsOptions().setShowGridLines(true);
+        options.setRenderComments(true);
     }
 
     public static HtmlOptions createCommonHtmlOptions(String password, String watermark) {
