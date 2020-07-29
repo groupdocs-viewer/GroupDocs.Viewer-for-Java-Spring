@@ -159,12 +159,4 @@ Please have a look at the LICENSE.md for more details
 - .NET WebForms [Document viewer](https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-.NET-WebForms)
 
 
-## Resources
-- **Website:** [www.groupdocs.com](http://www.groupdocs.com)
-- **Product Home:** [GroupDocs.Viewer for Java](https://products.groupdocs.com/viewer/java)
-- **Product API References:** [GroupDocs.Viewer for Java API](https://apireference.groupdocs.com/java/viewer)
-- **Download:** [Download GroupDocs.Viewer for Java](http://downloads.groupdocs.com/viewer/java)
-- **Documentation:** [GroupDocs.Viewer for Java Documentation](https://docs.groupdocs.com/display/viewerjava/Home)
-- **Free Support Forum:** [GroupDocs.Viewer for Java Free Support Forum](https://forum.groupdocs.com/c/viewer)
-- **Paid Support Helpdesk:** [GroupDocs.Viewer for Java Paid Support Helpdesk](https://helpdesk.groupdocs.com)
-- **Blog:** [GroupDocs.Viewer for Java Blog](https://blog.groupdocs.com/category/groupdocs-viewer-product-family/)
+[Home](https://www.groupdocs.com/) | [Product Page](https://products.groupdocs.com/viewer/java) | [Documentation](https://docs.groupdocs.com/viewer/java/) | [Demos](https://products.groupdocs.app/viewer/family) | [API Reference](https://apireference.groupdocs.com/java/viewer) | [Examples](https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java/tree/master/Examples) | [Blog](https://blog.groupdocs.com/category/viewer/) | [Free Support](https://forum.groupdocs.com/c/viewer) | [Temporary License](https://purchase.groupdocs.com/temporary-license)
