@@ -34,11 +34,6 @@ public class Application extends SpringBootServletInitializer {
         SpringApplication.run(Application.class, args);
     }
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(Application.class);
-    }
-
     @Bean
     public static PropertySourcesPlaceholderConfigurer properties() {
         PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
@@ -68,9 +63,15 @@ public class Application extends SpringBootServletInitializer {
         return propertiesFactoryBean;
     }
 
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
+
     /**
      * Configure CORS parameters
-     * @return
+     *
+     * @return Web Mvc configurer
      */
     @Bean
     public WebMvcConfigurer corsConfigurer() {

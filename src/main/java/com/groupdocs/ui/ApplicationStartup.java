@@ -18,8 +18,7 @@ public class ApplicationStartup implements ApplicationListener<WebServerInitiali
     /**
      * This method is called during Spring's startup.
      *
-     * @param event Event raised when an ApplicationContext gets initialized or
-     * refreshed.
+     * @param event Event raised when an ApplicationContext gets initialized or refreshed.
      */
     public void onApplicationEvent(WebServerInitializedEvent event) {
         // use this event for obtaining the local port of a running server

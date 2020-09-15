@@ -1,5 +1,6 @@
 package com.groupdocs.ui.viewer;
 
+import com.groupdocs.ui.controller.ViewerController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -25,7 +25,7 @@ public class GroupDocsExceptionHandler extends ResponseEntityExceptionHandler {
             exception.printStackTrace();
             exceptionEntity.setException(exception);
         }
-        logger.error(exception.getCause() != null? exception.getCause().getLocalizedMessage() : message);
+        logger.error(exception.getCause() != null ? exception.getCause().getLocalizedMessage() : message);
         return new ResponseEntity<>(exceptionEntity, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
