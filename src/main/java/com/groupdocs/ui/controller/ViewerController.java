@@ -1,21 +1,24 @@
-package com.groupdocs.ui.viewer;
+package com.groupdocs.ui.controller;
 
 import com.groupdocs.ui.config.GlobalConfiguration;
+import com.groupdocs.ui.config.ViewerConfiguration;
 import com.groupdocs.ui.exception.TotalGroupDocsException;
 import com.groupdocs.ui.model.request.FileTreeRequest;
 import com.groupdocs.ui.model.request.LoadDocumentPageRequest;
 import com.groupdocs.ui.model.request.LoadDocumentRequest;
+import com.groupdocs.ui.model.request.RotateDocumentPagesRequest;
 import com.groupdocs.ui.model.response.FileDescriptionEntity;
 import com.groupdocs.ui.model.response.LoadDocumentEntity;
 import com.groupdocs.ui.model.response.PageDescriptionEntity;
 import com.groupdocs.ui.model.response.UploadedDocumentEntity;
+import com.groupdocs.ui.service.ViewerService;
 import com.groupdocs.ui.util.Utils;
-import com.groupdocs.ui.viewer.model.request.RotateDocumentPagesRequest;
-import com.groupdocs.ui.viewer.model.response.RotatedPageEntity;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +40,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @Controller
+@Scope("session")
 @RequestMapping(value = "/viewer")
 public class ViewerController {
 
@@ -121,8 +125,6 @@ public class ViewerController {
 
     /**
      * Get pdf document for printing
-     *
-     * @return
      */
     @RequestMapping(method = RequestMethod.POST, value = "/printPdf", consumes = APPLICATION_JSON_VALUE)
     public void printPdf(@RequestBody LoadDocumentRequest loadDocumentRequest, HttpServletResponse response) {
@@ -159,7 +161,7 @@ public class ViewerController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/rotateDocumentPages", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<RotatedPageEntity> rotateDocumentPages(@RequestBody RotateDocumentPagesRequest rotateDocumentPagesRequest) {
+    public PageDescriptionEntity rotateDocumentPages(@RequestBody RotateDocumentPagesRequest rotateDocumentPagesRequest) {
         return viewerService.rotateDocumentPages(rotateDocumentPagesRequest);
     }
 
@@ -201,6 +203,17 @@ public class ViewerController {
         UploadedDocumentEntity uploadedDocument = new UploadedDocumentEntity();
         uploadedDocument.setGuid(pathToFile);
         return uploadedDocument;
+    }
+
+    /**
+     * Rotate page(s)
+     *
+     * @return rotated pages list (each object contains page number and rotated angle information)
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "resources/{guid}/{resourceName}")
+    @ResponseBody
+    public ResponseEntity<byte[]> getResource(@PathVariable String guid, @PathVariable String resourceName) {
+        return viewerService.getResource(guid, resourceName);
     }
 
 }

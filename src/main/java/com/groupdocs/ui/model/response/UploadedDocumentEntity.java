@@ -10,6 +10,7 @@ public class UploadedDocumentEntity {
 
     /**
      * Get guid (file id)
+     *
      * @return guid
      */
     public String getGuid() {
@@ -18,6 +19,7 @@ public class UploadedDocumentEntity {
 
     /**
      * Set guid (file id)
+     *
      * @param guid guid
      */
     public void setGuid(String guid) {

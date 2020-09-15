@@ -12,11 +12,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class DefaultDirectories {
-    private static final Logger logger = LoggerFactory.getLogger(DefaultDirectories.class);
-
     public static final String LIC = ".lic";
     public static final String LICENSES = "Licenses";
     public static final String DOCUMENT_SAMPLES = "DocumentSamples";
+    private static final Logger logger = LoggerFactory.getLogger(DefaultDirectories.class);
 
     public static String defaultLicenseDirectory() {
         Path defaultLicFolder = FileSystems.getDefault().getPath(LICENSES).toAbsolutePath();

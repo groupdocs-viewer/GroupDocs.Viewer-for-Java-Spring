@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
