@@ -1,22 +1,18 @@
 package com.groupdocs.ui.model.response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoadDocumentEntity {
+
+    private String guid;
+    private List<PageDescriptionEntity> pages = new ArrayList<>();
+    private Boolean printAllowed = true;
+    private boolean showGridLines = true;
+
     /**
      * Document Guid
      */
-    private String guid;
-    /**
-     * list of pages
-     */
-    private List<PageDescriptionEntity> pages;
-
-    /**
-     * Restriction for printing pdf files in viewer
-     */
-    private Boolean printAllowed = true;
-
     public String getGuid() {
         return guid;
     }
@@ -25,6 +21,9 @@ public class LoadDocumentEntity {
         this.guid = guid;
     }
 
+    /**
+     * list of pages
+     */
     public List<PageDescriptionEntity> getPages() {
         return pages;
     }
@@ -33,11 +32,22 @@ public class LoadDocumentEntity {
         this.pages = pages;
     }
 
+    /**
+     * Restriction for printing pdf files in viewer
+     */
     public Boolean getPrintAllowed() {
         return printAllowed;
     }
 
     public void setPrintAllowed(Boolean printAllowed) {
         this.printAllowed = printAllowed;
+    }
+
+    public boolean isShowGridLines() {
+        return showGridLines;
+    }
+
+    public void setShowGridLines(boolean showGridLines) {
+        this.showGridLines = showGridLines;
     }
 }

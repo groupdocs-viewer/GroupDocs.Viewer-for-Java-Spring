@@ -2,10 +2,11 @@ package com.groupdocs.ui.util;
 
 import com.groupdocs.ui.config.ServerConfiguration;
 import com.groupdocs.ui.exception.TotalGroupDocsException;
-import com.groupdocs.viewer.exception.GroupDocsViewerException;
-import com.groupdocs.viewer.exception.InvalidPasswordException;
+import com.groupdocs.viewer.Viewer;
+import com.groupdocs.viewer.options.ViewInfoOptions;
+import com.groupdocs.viewer.results.Page;
+import com.groupdocs.viewer.results.ViewInfo;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -22,20 +23,14 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.Base64;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 import static com.groupdocs.ui.exception.PasswordExceptions.INCORRECT_PASSWORD;
 import static com.groupdocs.ui.exception.PasswordExceptions.PASSWORD_REQUIRED;
-import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
 
 public class Utils {
     private static final Logger logger = LoggerFactory.getLogger(Utils.class);
-
-    public static final FileNameComparator FILE_NAME_COMPARATOR = new FileNameComparator();
-    public static final FileTypeComparator FILE_TYPE_COMPARATOR = new FileTypeComparator();
 
     /**
      * Set local port from request to config
@@ -47,19 +42,6 @@ public class Utils {
         if (server.getHttpPort() == null) {
             server.setHttpPort(request.getLocalPort());
         }
-    }
-
-    /**
-     * Read stream and convert to string
-     *
-     * @param inputStream
-     * @return
-     * @throws IOException
-     */
-    public static String getStringFromStream(InputStream inputStream) throws IOException {
-        byte[] bytes = IOUtils.toByteArray(inputStream);
-        // encode ByteArray into String
-        return Base64.getEncoder().encodeToString(bytes);
     }
 
     /**
@@ -81,18 +63,6 @@ public class Utils {
             for (String value : entry.getValue()) {
                 response.addHeader(entry.getKey(), value);
             }
-        }
-    }
-
-    /**
-     * Set "Content-Length" header into response
-     *
-     * @param response http response
-     * @param length   the length of file
-     */
-    public static void addFileDownloadLengthHeader(HttpServletResponse response, Long length) {
-        if (length != null) {
-            response.setHeader(CONTENT_LENGTH, Long.toString(length));
         }
     }
 
@@ -211,57 +181,31 @@ public class Utils {
         return file;
     }
 
-    /**
-     * FileNameComparator
-     * Compare and sort file names alphabetically
-     *
-     * @author Aspose Pty Ltd
-     */
-    static class FileNameComparator implements Comparator<File> {
-
-        /**
-         * Compare two file names
-         *
-         * @param file1
-         * @param file2
-         * @return int
-         */
-        @Override
-        public int compare(File file1, File file2) {
-
-            return String.CASE_INSENSITIVE_ORDER.compare(file1.getName(),
-                    file2.getName());
+    public static MediaType detectMediaType(String fileName) {
+        switch (fileName.substring(fileName.lastIndexOf('.'))) {
+            case ".png":
+                return MediaType.IMAGE_PNG;
+            case ".jpeg":
+            case ".jpg":
+                return MediaType.IMAGE_JPEG;
+            case ".js":
+                return MediaType.valueOf("text/javascript");
+            case ".css":
+                return MediaType.valueOf("text/css");
         }
+        return MediaType.APPLICATION_OCTET_STREAM;
     }
 
-    /**
-     * FileTypeComparator
-     * Compare and sort file types - folders first
-     *
-     * @author Aspose Pty Ltd
-     */
-    static class FileTypeComparator implements Comparator<File> {
-
-        /**
-         * Compare two file types
-         *
-         * @param file1
-         * @param file2
-         * @return
-         */
-        @Override
-        public int compare(File file1, File file2) {
-
-            if (file1.isDirectory() && file2.isFile()) {
-                return -1;
-            }
-            if (file1.isDirectory() && file2.isDirectory()) {
-                return 0;
-            }
-            if (file1.isFile() && file2.isFile()) {
-                return 0;
-            }
-            return 1;
+    public static void applyWidthHeightFix(Viewer viewer, ViewInfo viewInfo) {
+        // Fix to detect size, because there is a bug with detecting size in HTML mode
+        // The bug is already fixed in .NET and will be fixed in the next version of Java viewer
+        final ViewInfo fixViewInfo = viewer.getViewInfo(ViewInfoOptions.forPngView(false));
+        final List<Page> fixPages = fixViewInfo.getPages();
+        final List<Page> pages = viewInfo.getPages();
+        for (int n = 0; n < Math.min(fixPages.size(), pages.size()); n++) {
+            final Page page = pages.get(n);
+            final Page fixPage = fixPages.get(n);
+            pages.set(n, new Page(page.getNumber(), page.isVisible(), fixPage.getWidth(), fixPage.getHeight(), page.getLines()));
         }
     }
 }

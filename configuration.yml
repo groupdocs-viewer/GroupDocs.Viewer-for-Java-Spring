@@ -88,3 +88,7 @@ viewer:
   # Set false to ignore document print security
   # Set true to check document print security
   printAllowed: true
+  # Set true to show grid lines
+  showGridLines: true
+  # Set cache folder name
+  cacheFolderName: cache

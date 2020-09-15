@@ -1,11 +1,11 @@
-package com.groupdocs.ui.viewer;
+package com.groupdocs.ui.config;
 
-import com.groupdocs.ui.config.CommonConfiguration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 
 import static com.groupdocs.ui.config.DefaultDirectories.defaultViewerDirectory;
 import static com.groupdocs.ui.config.DefaultDirectories.relativePathToAbsolute;
@@ -52,12 +52,21 @@ public class ViewerConfiguration extends CommonConfiguration {
     @Value("#{new Boolean('${viewer.printAllowed}')}")
     private Boolean printAllowed;
 
+    @Value("#{new Boolean('${viewer.showGridLines}')}")
+    private Boolean showGridLines;
+
+    @Value("${viewer.cacheFolderName}")
+    private String cacheFolderName;
+
     @PostConstruct
     public void init() {
         this.filesDirectory = StringUtils.isEmpty(this.filesDirectory) ? defaultViewerDirectory() : relativePathToAbsolute(this.filesDirectory);
     }
 
     public String getFilesDirectory() {
+        if (!StringUtils.isEmpty(filesDirectory) && !filesDirectory.endsWith(File.separator)) {
+            return filesDirectory + File.separator;
+        }
         return filesDirectory;
     }
 
@@ -161,10 +170,25 @@ public class ViewerConfiguration extends CommonConfiguration {
         this.printAllowed = printAllowed;
     }
 
+    public Boolean getShowGridLines() {
+        return showGridLines;
+    }
+
+    public void setShowGridLines(Boolean showGridLines) {
+        this.showGridLines = showGridLines;
+    }
+
+    public String getCacheFolderName() {
+        return cacheFolderName;
+    }
+
+    public void setCacheFolderName(String cacheFolderName) {
+        this.cacheFolderName = cacheFolderName;
+    }
+
     @Override
     public String toString() {
-        return super.toString() +
-                "ViewerConfiguration{" +
+        return "ViewerConfiguration{" +
                 "filesDirectory='" + filesDirectory + '\'' +
                 ", fontsDirectory='" + fontsDirectory + '\'' +
                 ", preloadPageCount=" + preloadPageCount +
@@ -177,7 +201,9 @@ public class ViewerConfiguration extends CommonConfiguration {
                 ", cache=" + cache +
                 ", saveRotateState=" + saveRotateState +
                 ", watermarkText='" + watermarkText + '\'' +
-                ", printAllowed='" + printAllowed + '\'' +
+                ", printAllowed=" + printAllowed +
+                ", showGridLines=" + showGridLines +
+                ", cacheFolderName=" + cacheFolderName +
                 '}';
     }
 }
