@@ -1,15 +1,14 @@
 package com.groupdocs.ui.cache;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
-import com.groupdocs.ui.cache.mixin.PageMixIn;
-import com.groupdocs.ui.cache.mixin.PdfViewInfoMixIn;
-import com.groupdocs.ui.cache.mixin.ViewInfoMixIn;
+import com.groupdocs.ui.cache.mixin.*;
 import com.groupdocs.ui.exception.DiskAccessException;
-import com.groupdocs.viewer.results.Page;
-import com.groupdocs.viewer.results.PdfViewInfo;
-import com.groupdocs.viewer.results.ViewInfo;
+import com.groupdocs.ui.exception.TotalGroupDocsException;
+import com.groupdocs.viewer.results.*;
+import com.groupdocs.viewer.results.Character;
 import com.groupdocs.viewer.utils.PathUtils;
 import org.apache.commons.io.IOUtils;
 
@@ -20,9 +19,17 @@ public class FileViewerCache implements ViewerCache {
     private static final long WAIT_TIMEOUT = 100L;
 
     static {
-        MAPPER.addMixIn(ViewInfo.class, ViewInfoMixIn.class);
-        MAPPER.addMixIn(PdfViewInfo.class, PdfViewInfoMixIn.class);
+        MAPPER.addMixIn(CadViewInfo.class, CadViewInfoMixIn.class);
+        MAPPER.addMixIn(Character.class, CharacterMixIn.class);
+        MAPPER.addMixIn(Layer.class, LayerMixIn.class);
+        MAPPER.addMixIn(Layout.class, LayoutMixIn.class);
+        MAPPER.addMixIn(Line.class, LineMixIn.class);
+        MAPPER.addMixIn(OutlookViewInfo.class, OutlookViewInfoMixIn.class);
         MAPPER.addMixIn(Page.class, PageMixIn.class);
+        MAPPER.addMixIn(PdfViewInfo.class, PdfViewInfoMixIn.class);
+        MAPPER.addMixIn(ProjectManagementViewInfo.class, ProjectManagementViewInfoMixIn.class);
+        MAPPER.addMixIn(ViewInfo.class, ViewInfoMixIn.class);
+        MAPPER.addMixIn(Word.class, WordMixIn.class);
     }
 
     /**
@@ -103,8 +110,8 @@ public class FileViewerCache implements ViewerCache {
             for (Class<?> clazz : clazzs) {
                 final FileInputStream inputStream = new FileInputStream(cacheFilePath);
                 try {
-                    return (T) MAPPER.readValue(inputStream, clazz);
-                } catch (UnrecognizedPropertyException e) {
+                    return (T)  MAPPER.readValue(inputStream, clazz);
+                } catch (UnrecognizedPropertyException | InvalidDefinitionException e) {
                     // continue;
                 } finally {
                     inputStream.close();
@@ -117,7 +124,7 @@ public class FileViewerCache implements ViewerCache {
                 throw new RuntimeException(ex);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new TotalGroupDocsException("Cache loading error", e);
         }
         return null;
     }
@@ -137,9 +144,9 @@ public class FileViewerCache implements ViewerCache {
     }
 
     @Override
-    public boolean contains(String key) {
+    public boolean doesNotContains(String key) {
         String file = PathUtils.combine(this.getCachePath(), this.getCacheSubFolder(), key);
-        return new File(file).exists();
+        return !new File(file).exists();
     }
 
     private OutputStream getStream(String path) throws FileNotFoundException, InterruptedException {

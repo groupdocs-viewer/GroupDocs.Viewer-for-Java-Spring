@@ -87,7 +87,7 @@ public class HtmlViewer extends CustomViewer {
         List<Integer> missingPages = new ArrayList<Integer>();
         for (Page page : pages) {
             String pageKey = "p" + page.getNumber() + ".html";
-            if (!this.cache.contains(pageKey)) {
+            if (this.cache.doesNotContains(pageKey)) {
                 missingPages.add(page.getNumber());
             }
         }

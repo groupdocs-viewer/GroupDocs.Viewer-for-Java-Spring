@@ -14,12 +14,14 @@ import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -182,30 +184,64 @@ public class Utils {
     }
 
     public static MediaType detectMediaType(String fileName) {
-        switch (fileName.substring(fileName.lastIndexOf('.'))) {
-            case ".png":
-                return MediaType.IMAGE_PNG;
-            case ".jpeg":
-            case ".jpg":
-                return MediaType.IMAGE_JPEG;
-            case ".js":
-                return MediaType.valueOf("text/javascript");
-            case ".css":
-                return MediaType.valueOf("text/css");
+        String mediaType;
+        try {
+            mediaType = Files.probeContentType(new File(fileName).toPath());
+            if (mediaType == null) {
+                mediaType = URLConnection.guessContentTypeFromName(fileName);
+            }
+            if (mediaType == null) {
+                mediaType = new MimetypesFileTypeMap().getContentType(fileName);
+            }
+            if (mediaType == null || (mediaType.equals(MediaType.APPLICATION_OCTET_STREAM_VALUE) && fileName.contains("."))) {
+                final String extension = fileName.substring(fileName.lastIndexOf("."));
+                switch (extension) {
+                    case ".otf":
+                        mediaType = "font/otf";
+                        break;
+                    case ".sfnt":
+                        mediaType = "font/sfnt";
+                        break;
+                    case ".ttf":
+                        mediaType = "font/ttf";
+                        break;
+                    case ".woff":
+                        mediaType = "font/woff";
+                        break;
+                    case ".woff2":
+                        mediaType = "font/woff2";
+                        break;
+                    case ".eot":
+                        mediaType = "application/vnd.ms-fontobject";
+                        break;
+                    default:
+                        mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+                }
+            }
+        } catch (IOException e) {
+            logger.warn("Can't detect content type using file name '" + fileName + "'");
+            throw new TotalGroupDocsException("Can't detect content type using file name '" + fileName + "'", e);
         }
-        return MediaType.APPLICATION_OCTET_STREAM;
+        return MediaType.parseMediaType(mediaType);
     }
 
     public static void applyWidthHeightFix(Viewer viewer, ViewInfo viewInfo) {
         // Fix to detect size, because there is a bug with detecting size in HTML mode
         // The bug is already fixed in .NET and will be fixed in the next version of Java viewer
         final ViewInfo fixViewInfo = viewer.getViewInfo(ViewInfoOptions.forPngView(false));
-        final List<Page> fixPages = fixViewInfo.getPages();
         final List<Page> pages = viewInfo.getPages();
+        final List<Page> fixPages = fixViewInfo.getPages();
+        int lastFixWidth = 0, lastFixHeight = 0;
         for (int n = 0; n < Math.min(fixPages.size(), pages.size()); n++) {
             final Page page = pages.get(n);
             final Page fixPage = fixPages.get(n);
-            pages.set(n, new Page(page.getNumber(), page.isVisible(), fixPage.getWidth(), fixPage.getHeight(), page.getLines()));
+            int fixWidth = fixPage.getWidth();
+            int fixHeight = fixPage.getHeight();
+            if (page.getWidth() == 0 && page.getHeight() == 0) {
+                pages.set(n, new Page(page.getNumber(), page.isVisible(), (fixWidth == 0) ? lastFixWidth : fixWidth, (fixHeight == 0) ? lastFixHeight : fixHeight, page.getLines()));
+            }
+            lastFixWidth = pages.get(n).getWidth();
+            lastFixHeight = pages.get(n).getHeight();
         }
     }
 }

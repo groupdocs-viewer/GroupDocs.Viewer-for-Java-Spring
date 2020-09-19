@@ -38,5 +38,5 @@ public interface ViewerCache {
      */
     String getCacheFilePath(String key);
 
-    boolean contains(String key);
+    boolean doesNotContains(String key);
 }

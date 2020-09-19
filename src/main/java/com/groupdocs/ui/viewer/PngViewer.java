@@ -41,6 +41,9 @@ public class PngViewer extends CustomViewer {
 
     public void createCache() {
         ViewInfo viewInfo = this.getViewInfo();
+        if (viewInfo == null) {
+            throw new IllegalStateException("Can't get ViewInfo. The problem can be with deserealization (DESERIALIZATION_CLASSES)");
+        }
 
         synchronized (this.filePath) {
             int[] missingPages = this.getPagesMissingFromCache(viewInfo.getPages());
@@ -55,7 +58,7 @@ public class PngViewer extends CustomViewer {
         List<Integer> missingPages = new ArrayList<>();
         for (Page page : pages) {
             String pageKey = "p" + page.getNumber() + ".png";
-            if (!this.cache.contains(pageKey)) {
+            if (this.cache.doesNotContains(pageKey)) {
                 missingPages.add(page.getNumber());
             }
         }
