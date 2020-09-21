@@ -6,8 +6,7 @@ import com.groupdocs.ui.util.Utils;
 import com.groupdocs.viewer.Viewer;
 import com.groupdocs.viewer.interfaces.PageStreamFactory;
 import com.groupdocs.viewer.options.*;
-import com.groupdocs.viewer.results.PdfViewInfo;
-import com.groupdocs.viewer.results.ViewInfo;
+import com.groupdocs.viewer.results.*;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -16,6 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public abstract class CustomViewer {
+    private static final Class<?>[] DESERIALIZATION_CLASSES = new Class[]{CadViewInfo.class, PdfViewInfo.class, ProjectManagementViewInfo.class, OutlookViewInfo.class, ViewInfo.class};
     protected static ViewerConfiguration viewerConfiguration;
     protected final String filePath;
     protected final ViewerCache cache;
@@ -67,18 +67,18 @@ public abstract class CustomViewer {
         }
     }
 
-    protected ViewInfo getViewInfo() {
+    public ViewInfo getViewInfo() {
         String cacheKey = "view_info.dat";
 
-        if (!cache.contains(cacheKey)) {
+        if (cache.doesNotContains(cacheKey)) {
             synchronized (filePath) {
-                if (!cache.contains(cacheKey)) {
-                    return cache.getValue(cacheKey, this.readViewInfo(viewInfoOptions), new Class[]{ViewInfo.class, PdfViewInfo.class});
+                if (cache.doesNotContains(cacheKey)) {
+                    return cache.getValue(cacheKey, this.readViewInfo(viewInfoOptions), DESERIALIZATION_CLASSES);
                 }
             }
         }
 
-        return cache.getValue(cacheKey, null, new Class[]{ViewInfo.class, PdfViewInfo.class});
+        return cache.getValue(cacheKey, null, DESERIALIZATION_CLASSES);
     }
 
     private ViewInfo readViewInfo(ViewInfoOptions viewInfoOptions) {

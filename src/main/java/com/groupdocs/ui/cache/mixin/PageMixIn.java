@@ -8,5 +8,4 @@ import java.util.List;
 public abstract class PageMixIn {
     PageMixIn(@JsonProperty("number") int number, @JsonProperty("visible") boolean visible, @JsonProperty("width") int width, @JsonProperty("height") int height, @JsonProperty("lines") List<Line> lines) {
     }
-
 }
