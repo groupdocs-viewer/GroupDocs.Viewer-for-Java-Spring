@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -181,50 +180,11 @@ public class Utils {
     }
 
     public static MediaType detectMediaType(String fileName) {
-        String mediaType = null;
-        try {
-            if (fileName.contains(".")) {
-                final String extension = fileName.substring(fileName.lastIndexOf("."));
-                switch (extension) {
-                    case ".otf":
-                        mediaType = "font/otf";
-                        break;
-                    case ".sfnt":
-                        mediaType = "font/sfnt";
-                        break;
-                    case ".ttf":
-                        mediaType = "font/ttf";
-                        break;
-                    case ".woff":
-                        mediaType = "font/woff";
-                        break;
-                    case ".woff2":
-                        mediaType = "font/woff2";
-                        break;
-                    case ".eot":
-                        mediaType = "application/vnd.ms-fontobject";
-                        break;
-                    case ".js":
-                        mediaType = "application/javascript";
-                        break;
-                    default:
-                        mediaType = null;
-                }
-            }
-            if (mediaType == null) {
-                mediaType = Files.probeContentType(new File(fileName).toPath());
-                if (mediaType == null) {
-                    mediaType = URLConnection.guessContentTypeFromName(fileName);
-                }
-                if (mediaType == null) {
-                    return MediaType.APPLICATION_OCTET_STREAM;
-                }
-            }
-        } catch (IOException e) {
-            logger.warn("Can't detect content type using file name '" + fileName + "'");
-            throw new TotalGroupDocsException("Can't detect content type using file name '" + fileName + "'", e);
+        if (fileName.contains(".")) {
+            final String extension = fileName.substring(fileName.lastIndexOf("."));
+            return MediaType.parseMediaType(MediaTypes.detectMediaTypeForWeb(extension));
         }
-        return MediaType.parseMediaType(mediaType);
+        return MediaType.APPLICATION_OCTET_STREAM;
     }
 
     public static void applyWidthHeightFix(Viewer viewer, ViewInfo viewInfo) {

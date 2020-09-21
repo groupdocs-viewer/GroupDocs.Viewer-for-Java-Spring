@@ -11,35 +11,35 @@ public class MediaTypesDetectionTests {
     public void testOtf() {
         final MediaType actualMediaType = Utils.detectMediaType(".otf");
         Assert.assertNotNull(actualMediaType);
-        Assert.assertEquals(MediaType.valueOf("font/otf"), actualMediaType);
+        Assert.assertEquals(MediaType.valueOf("application/x-font-otf"), actualMediaType);
     }
 
     @Test
     public void testSfnt() {
         final MediaType actualMediaType = Utils.detectMediaType(".sfnt");
         Assert.assertNotNull(actualMediaType);
-        Assert.assertEquals(MediaType.valueOf("font/sfnt"), actualMediaType);
+        Assert.assertEquals(MediaType.valueOf("application/font-sfnt"), actualMediaType);
     }
 
     @Test
     public void testTtf() {
         final MediaType actualMediaType = Utils.detectMediaType(".ttf");
         Assert.assertNotNull(actualMediaType);
-        Assert.assertEquals(MediaType.valueOf("font/ttf"), actualMediaType);
+        Assert.assertEquals(MediaType.valueOf("application/x-font-ttf"), actualMediaType);
     }
 
     @Test
     public void testWoff() {
         final MediaType actualMediaType = Utils.detectMediaType(".woff");
         Assert.assertNotNull(actualMediaType);
-        Assert.assertEquals(MediaType.valueOf("font/woff"), actualMediaType);
+        Assert.assertEquals(MediaType.valueOf("application/x-font-woff"), actualMediaType);
     }
 
     @Test
     public void testWoff2() {
         final MediaType actualMediaType = Utils.detectMediaType(".woff2");
         Assert.assertNotNull(actualMediaType);
-        Assert.assertEquals(MediaType.valueOf("font/woff2"), actualMediaType);
+        Assert.assertEquals(MediaType.valueOf("application/x-font-woff2"), actualMediaType);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class MediaTypesDetectionTests {
     public void testXml() {
         final MediaType actualMediaType = Utils.detectMediaType(".xml");
         Assert.assertNotNull(actualMediaType);
-        Assert.assertEquals(MediaType.valueOf("text/xml"), actualMediaType);
+        Assert.assertEquals(MediaType.valueOf("application/xml"), actualMediaType);
     }
 
     @Test

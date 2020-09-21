@@ -26,7 +26,6 @@ import com.groupdocs.viewer.fonts.FontSettings;
 import com.groupdocs.viewer.fonts.FontSource;
 import com.groupdocs.viewer.fonts.SearchOption;
 import com.groupdocs.viewer.options.LoadOptions;
-import com.groupdocs.viewer.options.ViewInfoOptions;
 import com.groupdocs.viewer.results.Page;
 import com.groupdocs.viewer.results.ViewInfo;
 import com.groupdocs.viewer.utils.PathUtils;
