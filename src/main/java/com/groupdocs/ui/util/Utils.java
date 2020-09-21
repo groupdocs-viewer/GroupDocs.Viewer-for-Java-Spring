@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -171,9 +170,7 @@ public class Utils {
                 int number = i + 1;
                 String newFileName = FilenameUtils.removeExtension(fileName) + "-Copy(" + number + ")." + FilenameUtils.getExtension(fileName);
                 file = new File(directory + File.separator + newFileName);
-                if (file.exists()) {
-                    continue;
-                } else {
+                if (!file.exists()) {
                     break;
                 }
             }
@@ -184,16 +181,9 @@ public class Utils {
     }
 
     public static MediaType detectMediaType(String fileName) {
-        String mediaType;
+        String mediaType = null;
         try {
-            mediaType = Files.probeContentType(new File(fileName).toPath());
-            if (mediaType == null) {
-                mediaType = URLConnection.guessContentTypeFromName(fileName);
-            }
-            if (mediaType == null) {
-                mediaType = new MimetypesFileTypeMap().getContentType(fileName);
-            }
-            if (mediaType == null || (mediaType.equals(MediaType.APPLICATION_OCTET_STREAM_VALUE) && fileName.contains("."))) {
+            if (fileName.contains(".")) {
                 final String extension = fileName.substring(fileName.lastIndexOf("."));
                 switch (extension) {
                     case ".otf":
@@ -214,8 +204,20 @@ public class Utils {
                     case ".eot":
                         mediaType = "application/vnd.ms-fontobject";
                         break;
+                    case ".js":
+                        mediaType = "application/javascript";
+                        break;
                     default:
-                        mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+                        mediaType = null;
+                }
+            }
+            if (mediaType == null) {
+                mediaType = Files.probeContentType(new File(fileName).toPath());
+                if (mediaType == null) {
+                    mediaType = URLConnection.guessContentTypeFromName(fileName);
+                }
+                if (mediaType == null) {
+                    return MediaType.APPLICATION_OCTET_STREAM;
                 }
             }
         } catch (IOException e) {
