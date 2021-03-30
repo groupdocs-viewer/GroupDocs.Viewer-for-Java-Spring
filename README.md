@@ -12,7 +12,7 @@
 
 
 ## Document Viewer API for Java Spring
-[GroupDocs.Viewer for Java](https://products.groupdocs.com/viewer/java) API allows you to view over 90 document formats including **DOCX**, **PDF**, **PPT**, **XLS**, among many others without any additional dependencies. Thanks to its flexible configuration it can be configured to **view documents as images or as HTML5**.
+[GroupDocs.Viewer for Java](https://products.groupdocs.com/viewer/java) API allows you to view over 170+ document formats including **DOCX**, **PDF**, **PPT**, **XLS**, among many others without any additional dependencies. Thanks to its flexible configuration it can be configured to **view documents as images or as HTML5**.
 
 
 In order to demonstrate GroupDocs.Viewer for Java reach and powerful features we prepared a modern **document viewer** front-end web UI example. Which can be used as a standalone application or easily integrated into your project.
