@@ -6,6 +6,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/e8ee774e4c4b2fad413a/maintainability)](https://codeclimate.com/github/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/maintainability)
 [![GitHub license](https://img.shields.io/github/license/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring.svg)](https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java-Spring/blob/master/LICENSE)
 
+:warning: **This repository has moved to https://github.com/groupdocs-viewer/GroupDocs.Viewer-for-Java/tree/master/Demos/Spring**
+
 ## System Requirements
 - Java 8 (JDK 1.8)
 - Maven 3
